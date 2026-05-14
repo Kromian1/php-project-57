@@ -3,4 +3,4 @@ install:
 dump:
 	composer dump-autoload
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 app
+	composer exec --verbose phpcs -- --standard=PSR12 routes

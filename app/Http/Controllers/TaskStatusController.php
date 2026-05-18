@@ -12,7 +12,7 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        //
+        return view('task_status.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('task_status.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        //
+        return view('task_status.edit', compact('taskStatus'));
     }
 
     /**

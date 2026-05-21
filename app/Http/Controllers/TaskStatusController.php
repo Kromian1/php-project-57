@@ -37,6 +37,8 @@ class TaskStatusController extends Controller
         $status = new TaskStatus();
         $status->fill($data)->save();
 
+        flash('Статус успешно добавлен')->success()->important();
+
         return redirect()->route('task_statuses.index');
     }
 
@@ -70,6 +72,8 @@ class TaskStatusController extends Controller
 
         $status->fill($data)->save();
 
+        flash('Статус успешно обновлен')->success()->important();
+
         return redirect()->route('task_statuses.index');
     }
 
@@ -79,6 +83,8 @@ class TaskStatusController extends Controller
     public function destroy($id)
     {
         TaskStatus::destroy($id);
+
+        flash('Статус успешно удален')->success()->important();
 
         return redirect()->route('task_statuses.index');
     }

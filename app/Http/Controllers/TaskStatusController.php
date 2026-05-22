@@ -40,8 +40,7 @@ class TaskStatusController extends Controller
         $status = new TaskStatus();
         $status->fill($data)->save();
 
-        flash('Статус успешно добавлен')->success()->important();
-
+        flash(__('Status successfully added'))->success()->important();
         return redirect()->route('task_statuses.index');
     }
 
@@ -78,8 +77,7 @@ class TaskStatusController extends Controller
 
         $status->fill($data)->save();
 
-        flash('Статус успешно обновлен')->success()->important();
-
+        flash(__('Status successfully updated'))->success()->important();
         return redirect()->route('task_statuses.index');
     }
 
@@ -91,10 +89,9 @@ class TaskStatusController extends Controller
         $status = TaskStatus::findOrFail($id);
         Gate::authorize('delete', $status);
 
-        $status->destroy();
+        $status->delete();
 
-        flash('Статус успешно удален')->success()->important();
-
+        flash(__('Status successfully deleted'))->success()->important();
         return redirect()->route('task_statuses.index');
     }
 }

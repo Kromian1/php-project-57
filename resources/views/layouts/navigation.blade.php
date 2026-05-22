@@ -11,9 +11,12 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.index')">
+                        {{ __('Statuses') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -58,6 +61,23 @@
                 </div>
             @endauth
 
+            <!-- Language Switcher -->
+            <div class="flex items-center ml-4 space-x-2">
+                @php
+                    $currentLocale = app()->getLocale();
+                @endphp
+
+                <a href="{{ route('lang.switch', 'en') }}"
+                   class="text-sm {{ $currentLocale == 'en' ? 'font-bold text-gray-900' : 'text-gray-500' }}">
+                    EN
+                </a>
+                <span class="text-gray-500">|</span>
+                <a href="{{ route('lang.switch', 'ru') }}"
+                   class="text-sm {{ $currentLocale == 'ru' ? 'font-bold text-gray-900' : 'text-gray-500' }}">
+                    RU
+                </a>
+            </div>
+
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
@@ -76,6 +96,9 @@
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.*')">
+                    {{ __('Statuses') }}
                 </x-responsive-nav-link>
             </div>
 

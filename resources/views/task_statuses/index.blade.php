@@ -7,7 +7,9 @@
 @section('content')
     <div>
         <h1>Статусы задач</h1>
-        <a href="{{ route('task_statuses.create') }}">Создать статус</a>
+        @can('create', App\Models\TaskStatus::class)
+            <a href="{{ route('task_statuses.create') }}">Создать статус</a>
+        @endcan
     </div>
     <div>
         <table>
@@ -24,10 +26,14 @@
                         <td>{{ $status->id }}</td>
                         <td>{{ $status->name }}</td>
                         <td>
-                            <a href="{{ route('task_statuses.edit', $status) }}">Изменить</a>
-                            {{ html()->modelForm($status, 'DELETE', route('task_statuses.destroy', $status))->open() }}
-                                {{ html()->submit('Удалить')->attribute('onclick', 'return confirm (\'Вы уверены?\'') }}
-                            {{ html()->closeModelForm() }}
+                            @can('update', $status)
+                                <a href="{{ route('task_statuses.edit', $status) }}">Изменить</a>
+                            @endcan
+                            @can('delete', $status)
+                                    {{ html()->modelForm($status, 'DELETE', route('task_statuses.destroy', $status))->open() }}
+                                        {{ html()->submit('Удалить')->attribute('onclick', 'return confirm (\'Вы уверены?\'') }}
+                                    {{ html()->closeModelForm() }}
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

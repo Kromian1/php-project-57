@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TaskStatusController extends Controller
 {
@@ -21,7 +22,9 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', TaskStatus::class);
         $status = new TaskStatus();
+
         return view('task_statuses.create', compact('status'));
     }
 
@@ -56,6 +59,9 @@ class TaskStatusController extends Controller
     public function edit($id)
     {
         $status = TaskStatus::findOrFail($id);
+
+        Gate::authorize('update', $status);
+
         return view('task_statuses.edit', compact('status'));
     }
 
@@ -82,7 +88,10 @@ class TaskStatusController extends Controller
      */
     public function destroy($id)
     {
-        TaskStatus::destroy($id);
+        $status = TaskStatus::findOrFail($id);
+        Gate::authorize('delete', $status);
+
+        $status->destroy();
 
         flash('Статус успешно удален')->success()->important();
 

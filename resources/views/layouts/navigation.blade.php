@@ -61,23 +61,6 @@
                 </div>
             @endauth
 
-            <!-- Language Switcher -->
-            <div class="flex items-center ml-4 space-x-2">
-                @php
-                    $currentLocale = app()->getLocale();
-                @endphp
-
-                <a href="{{ route('lang.switch', 'en') }}"
-                   class="text-sm {{ $currentLocale == 'en' ? 'font-bold text-gray-900' : 'text-gray-500' }}">
-                    EN
-                </a>
-                <span class="text-gray-500">|</span>
-                <a href="{{ route('lang.switch', 'ru') }}"
-                   class="text-sm {{ $currentLocale == 'ru' ? 'font-bold text-gray-900' : 'text-gray-500' }}">
-                    RU
-                </a>
-            </div>
-
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">

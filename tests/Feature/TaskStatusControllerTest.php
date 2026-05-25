@@ -6,6 +6,8 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,9 +15,18 @@ class TaskStatusControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected const int PAGINATION_PER_PAGE = 15;
+
+    protected User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+    }
     public function test_index_response_code_and_pagination_15_per_page(): void
     {
-        TaskStatus::factory()->count(20)->create();
+        $this->createTaskStatuses(20);
 
         $response = $this->get(route('task_statuses.index'));
 
@@ -24,7 +35,7 @@ class TaskStatusControllerTest extends TestCase
 
         $taskStatuses = $response->viewData('taskStatuses');
 
-        $this->assertEquals(15, $taskStatuses->count());
+        $this->assertEquals(self::PAGINATION_PER_PAGE, $taskStatuses->count());
         $this->assertTrue($taskStatuses->hasMorePages());
     }
 
@@ -33,11 +44,11 @@ class TaskStatusControllerTest extends TestCase
         $response = $this->actingAsGuest()->get(route('task_statuses.create'));
         $response->assertStatus(403);
 
-        $user = User::factory()->create();
+        $user = $this->user;
 
         Gate::shouldReceive('authorize')->with('create', TaskStatus::class)->andReturn(true);
 
-        $response = $this->actingAs(($user))->get(route('task_statuses.create'));
+        $response = $this->actingAs($user)->get(route('task_statuses.create'));
 
         $response->assertStatus(200);
         $response->assertViewIs('task_statuses.create');
@@ -46,11 +57,11 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_store_status_success(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user;
 
         Gate::shouldReceive('authorize')->with('create', TaskStatus::class)->andReturn(true);
 
-        $response = $this->actingAs(($user))->post(route('task_statuses.store'), [
+        $response = $this->actingAs($user)->post(route('task_statuses.store'), [
             'name' => 'New Task Status',
         ]);
         $response->assertValid();
@@ -61,30 +72,16 @@ class TaskStatusControllerTest extends TestCase
         ]);
     }
 
-    public function test_store_status_empty_name_validation(): void
+    #[DataProvider('InvalidNameProvider')]
+    public function test_store_status_validation_fails(string $invalidName): void
     {
-        $user = User::factory()->create();
+        $user = $this->user;
+        $this->createTaskStatus('Duplicate Name');
 
         Gate::shouldReceive('authorize')->with('create', TaskStatus::class)->andReturn(true);
 
-        $response = $this->actingAs(($user))->post(route('task_statuses.store'), [
-            'name' => ''
-        ]);
-        $response->assertInvalid(['name']);
-        $response->assertSessionHasErrors();
-    }
-
-    public function test_store_status_duplicate_name_validation(): void
-    {
-        $existingTaskStatus = TaskStatus::factory()->create([
-            'name' => 'Duplicate Name'
-        ]);
-        $user = User::factory()->create();
-
-        Gate::shouldReceive('authorize')->with('create', TaskStatus::class)->andReturn(true);
-
-        $response = $this->actingAs(($user))->post(route('task_statuses.store'), [
-            'name' => 'Duplicate Name'
+        $response = $this->actingAs($user)->post(route('task_statuses.store'), [
+            'name' => $invalidName,
         ]);
         $response->assertInvalid(['name']);
         $response->assertSessionHasErrors();
@@ -92,8 +89,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_edit_status_success(): void
     {
-        $user = User::factory()->create();
-        $taskStatus = TaskStatus::factory()->create();
+        $user = $this->user;
+        $taskStatus = $this->createTaskStatus();
 
         Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(true);
 
@@ -107,7 +104,7 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_edit_status_as_guest(): void
     {
-        $taskStatus = TaskStatus::factory()->create();
+        $taskStatus = $this->createTaskStatus();
         $response = $this->actingAsGuest()->get(route('task_statuses.edit', [
             'task_status' => $taskStatus->id,
         ]));
@@ -117,7 +114,7 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_edit_status_non_existed(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user;
         Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(false);
 
         $response = $this->actingAs($user)->get(route('task_statuses.edit', [
@@ -129,9 +126,9 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_update_status_success(): void
     {
-        $user = User::factory()->create();
-        $taskStatus = TaskStatus::factory()->create();
-        Gate::shouldReceive('authorize')->with('update', $taskStatus)->andReturn(true);
+        $user = $this->user;
+        $taskStatus = $this->createTaskStatus();
+        Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(true);
 
         $response = $this->actingAs($user)->patch(route('task_statuses.update', [
             'task_status' => $taskStatus->id,
@@ -150,8 +147,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_update_status_empty_name_validation(): void
     {
-        $user = User::factory()->create();
-        $taskStatus = TaskStatus::factory()->create();
+        $user = $this->user;
+        $taskStatus = $this->createTaskStatus();
         Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(true);
 
         $response = $this->actingAs($user)->patch(route('task_statuses.update', [
@@ -171,11 +168,9 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_update_status_duplicate_name_validation(): void
     {
-        $user = User::factory()->create();
-        $existingStatus = TaskStatus::factory()->create([
-            'name' => 'Duplicate Name'
-        ]);
-        $statusToUpdate = TaskStatus::factory()->create();
+        $user = $this->user;
+        $this->createTaskStatus('Duplicate Name');
+        $statusToUpdate = $this->createTaskStatus();
         Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(true);
 
         $response = $this->actingAs($user)->patch(route('task_statuses.update',[
@@ -190,8 +185,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_delete_status_success(): void
     {
-        $user = User::factory()->create();
-        $taskStatus = TaskStatus::factory()->create();
+        $user = $this->user;
+        $taskStatus = $this->createTaskStatus();
 
         Gate::shouldReceive('authorize')->with('delete', TaskStatus::class)->andReturn(true);
 
@@ -207,7 +202,7 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_delete_status_as_guest(): void
     {
-        $taskStatus = TaskStatus::factory()->create();
+        $taskStatus = $this->createTaskStatus();
 
         $response = $this->actingAsGuest()->delete(route('task_statuses.destroy', [
             'task_status' => $taskStatus->id,
@@ -218,7 +213,7 @@ class TaskStatusControllerTest extends TestCase
 
     public function test_delete_status_non_existed(): void
     {
-        $user = User::factory()->create();
+        $user = $this->user;
         Gate::shouldReceive('authorize')->with('delete', TaskStatus::class)->andReturn(false);
 
         $response = $this->actingAs($user)->delete(route('task_statuses.destroy', [
@@ -226,5 +221,25 @@ class TaskStatusControllerTest extends TestCase
         ]));
 
         $response->assertStatus(404);
+    }
+
+    protected function createTaskStatus(string $name = ''): TaskStatus
+    {
+        return empty($name) ?
+            TaskStatus::factory()->create() :
+            TaskStatus::factory()->create(['name' => $name]);
+    }
+
+    public static function invalidNameProvider(): array
+    {
+        return [
+            'empty' => [''],
+            'duplicate' => ['Duplicate Name']
+        ];
+    }
+
+    protected function createTaskStatuses(int $pagination): Collection
+    {
+        return TaskStatus::factory()->count($pagination)->create();
     }
 }

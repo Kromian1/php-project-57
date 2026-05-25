@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin'
         ]);
         $this->call(TaskStatusSeeder::class);
+        $this->call(TaskSeeder::class);
     }
 }

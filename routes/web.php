@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ProfileController, TaskStatusController};
+use App\Http\Controllers\{ProfileController, TaskStatusController, TaskController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,5 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('task_statuses', TaskStatusController::class);
+
+Route::resource('tasks', TaskController::class);
 
 require __DIR__ . '/auth.php';

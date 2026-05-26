@@ -4,62 +4,86 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tasks = Task::query()->paginate();
+        return view('tasks.index', compact('tasks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        Gate::authorize('create', Task::class);
+
+        $task = new Task();
+
+        return view('tasks.create', compact('task'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', Task::class);
+
+        $data = $request->validate([
+            'name' => 'required|min:1',
+            'status_id' => 'required|integer|exists:task_statuses,id',
+            'assigned_to_id' => 'integer|exists:users,id'
+        ]);
+
+        $task = new Task();
+        $task->fill($data)->save();
+
+        flash(__('Task successfully created'))->success()->important();
+        return redirect()->route('tasks.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
+    public function show(int $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        return view('tasks.show', compact('task'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
+    public function edit(Task $task, int $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        Gate::authorize('update', $task);
+
+        return view('tasks.edit', compact('task'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, int $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        Gate::authorize('update', $task);
+
+        $data = $request->validate([
+            'name' => 'required|min:1',
+            'status_id' => 'required|integer|exists:task_statuses,id',
+            'assigned_to_id' => 'integer|exists:users,id'
+        ]);
+
+        $task->fill($data)->save();
+
+        flash(__('Task successfully updated'))->success()->important();
+        return redirect()->route('tasks.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Task $task)
+
+    public function destroy(int $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        Gate::authorize('delete', $task);
+
+        $task->delete();
+
+        flash(__('Task successfully deleted'))->success()->important();
+        return redirect()->route('tasks.index');
     }
 }

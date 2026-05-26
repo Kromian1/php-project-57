@@ -21,6 +21,7 @@ return [
     'Actions' => 'Действия',
     'Are you sure?' => 'Вы уверены?',
     'Back' => 'Назад',
+    'Main page' => 'Главная страница',
     'Status successfully added' => 'Статус успешно добавлен',
     'Status successfully updated' => 'Статус успешно обновлен',
     'Status successfully deleted' => 'Статус успешно удален',

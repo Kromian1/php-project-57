@@ -21,6 +21,7 @@ return [
     'Actions' => 'Actions',
     'Are you sure?' => 'Are you sure?',
     'Back' => 'Back',
+    'Main page' => 'Main page',
     'Status successfully added' => 'Status successfully added',
     'Status successfully updated' => 'Status successfully updated',
     'Status successfully deleted' => 'Status successfully deleted',

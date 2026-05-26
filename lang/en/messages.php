@@ -12,4 +12,7 @@ return [
     'You do not have permission to create status' => 'You do not have permission to create status',
     'You do not have permission to delete status' => 'You do not have permission to delete status',
     'You do not have permission to update status' => 'You do not have permission to update status',
+    'You do not have permission to create task' => 'You do not have permission to create task',
+    'You do not have permission to delete task' => 'You do not have permission to delete task',
+    'You do not have permission to update task' => 'You do not have permission to update task',
 ];

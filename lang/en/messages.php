@@ -9,6 +9,7 @@ return [
     'Status successfully added' => 'Status successfully added',
     'Status successfully updated' => 'Status successfully updated',
     'Status successfully deleted' => 'Status successfully deleted',
+    'Status cannot be deleted' => 'Status cannot be deleted',
     'Task successfully added' => 'Task successfully added',
     'Task successfully updated' => 'Task successfully updated',
     'Task successfully deleted' => 'Task successfully deleted',

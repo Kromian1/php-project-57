@@ -65,6 +65,11 @@ class TaskStatusController extends Controller
         $status = TaskStatus::findOrFail($id);
         Gate::authorize('delete', $status);
 
+        if ($status->tasks()->exists()) {
+            flash(__('Status cannot be deleted'))->error()->important();
+            return redirect()->route('task_statuses.index');
+        }
+
         $status->delete();
 
         flash(__('Status successfully deleted'))->success()->important();

@@ -19,7 +19,7 @@ class TaskPolicy
         return true;
     }
 
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
         return Auth::check()
             ? Response::allow()
@@ -27,7 +27,7 @@ class TaskPolicy
 
     }
 
-    public function update(User $user, Task $task): bool
+    public function update(User $user, Task $task): Response
     {
         return Auth::check()
             ? Response::allow()
@@ -35,8 +35,10 @@ class TaskPolicy
 
     }
 
-    public function delete(User $user, Task $task): bool
+    public function delete(User $user, Task $task): Response
     {
-        //может удалять только автор задачи
+        return $user->id === $task->created_by_id ?
+            Response::allow() :
+            Response::deny(__('You do not have permission to delete task'));
     }
 }

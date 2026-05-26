@@ -10,7 +10,7 @@ return [
     'Status successfully added' => 'Статус успешно добавлен',
     'Status successfully updated' => 'Статус успешно обновлен',
     'Status successfully deleted' => 'Статус успешно удален',
-    'Status cannot be deleted' => 'Статус не может быть удален',
+    'Status cannot be deleted' => 'Не удалось удалить статус',
     'Task successfully added' => 'Статус успешно добавлен',
     'Task successfully updated' => 'Статус успешно обновлен',
     'Task successfully deleted' => 'Статус успешно удален',

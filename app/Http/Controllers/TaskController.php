@@ -19,8 +19,8 @@ class TaskController extends Controller
         Gate::authorize('create', Task::class);
 
         $task = new Task();
-        $statuses = TaskStatus::all();
-        $users = User::all();
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
 
         return view('tasks.create', compact('task', 'statuses', 'users'));
     }
@@ -54,8 +54,8 @@ class TaskController extends Controller
     public function edit(int $id)
     {
         $task = Task::findOrFail($id);
-        $statuses = TaskStatus::all();
-        $users = User::all();
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
 
         Gate::authorize('update', $task);
 

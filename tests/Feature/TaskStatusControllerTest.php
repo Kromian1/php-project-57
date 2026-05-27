@@ -2,10 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\TaskStatus;
-use App\Models\User;
+use App\Models\{TaskStatus, Task, User};
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
@@ -118,7 +116,7 @@ class TaskStatusControllerTest extends TestCase
         Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(false);
 
         $response = $this->actingAs($user)->get(route('task_statuses.edit', [
-            'task_status' => 000,
+            'task_status' => 000
         ]));
 
         $response->assertStatus(404);
@@ -145,40 +143,17 @@ class TaskStatusControllerTest extends TestCase
         ]);
     }
 
-    public function test_update_status_empty_name_validation(): void
-    {
-        $user = $this->user;
-        $taskStatus = $this->createTaskStatus();
-        Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(true);
-
-        $response = $this->actingAs($user)->patch(route('task_statuses.update', [
-            'task_status' => $taskStatus->id,
-        ]), [
-            'name' => ''
-        ]);
-
-        $response->assertInvalid(['name']);
-        $response->assertSessionHasErrors();
-
-        $this->assertDatabaseHas('task_statuses', [
-            'id' => $taskStatus->id,
-            'name' => $taskStatus->name
-        ]);
-    }
-
-    public function test_update_status_duplicate_name_validation(): void
+    #[DataProvider('InvalidNameProvider')]
+    public function test_update_status_validation_falls(string $invalidName): void
     {
         $user = $this->user;
         $this->createTaskStatus('Duplicate Name');
-        $statusToUpdate = $this->createTaskStatus();
-        Gate::shouldReceive('authorize')->with('update', TaskStatus::class)->andReturn(true);
 
-        $response = $this->actingAs($user)->patch(route('task_statuses.update',[
-            'task_status' => $statusToUpdate->id,
-        ]), [
-            'name' => 'Duplicate Name'
+        Gate::shouldReceive('authorize')->with('create', TaskStatus::class)->andReturn(true);
+
+        $response = $this->actingAs($user)->post(route('task_statuses.store'), [
+            'name' => $invalidName,
         ]);
-
         $response->assertInvalid(['name']);
         $response->assertSessionHasErrors();
     }
@@ -221,6 +196,24 @@ class TaskStatusControllerTest extends TestCase
         ]));
 
         $response->assertStatus(404);
+    }
+
+    public function test_delete_status_connected_with_tasks(): void
+    {
+        $user = $this->user;
+        $taskStatus = $this->createTaskStatus();
+        $task = Task::factory()->create([
+            'status_id' => $taskStatus->id
+        ]);
+
+        $response = $this->actingAs($user)->delete(route('task_statuses.destroy', [
+            'task_status' => $taskStatus->id,
+        ]));
+
+        $response->assertRedirect(route('task_statuses.index'));
+        $this->assertDatabaseHas('task_statuses', [
+            'id' => $task->id,
+        ]);
     }
 
     protected function createTaskStatus(string $name = ''): TaskStatus

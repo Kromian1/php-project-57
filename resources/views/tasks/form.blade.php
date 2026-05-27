@@ -18,11 +18,11 @@
         ->class('shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' . ($errors->has('description') ? ' border-red-500' : ''))
         ->attribute('autofocus') }}
     {{ html()->label(__('Status'), 'status_id')->class('block text-gray-700 text-sm font-bold mb-2') }}
-    {{ html()->input('text', 'status_id')
+    {{ html()->select('status_id', $statuses)
         ->class('shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' . ($errors->has('status_id') ? ' border-red-500' : ''))
-        ->attribute('autofocus') }}
+        ->placeholder(__('Select status')) }}
     {{ html()->label(__('Executor'), 'assigned_to_id')->class('block text-gray-700 text-sm font-bold mb-2') }}
-    {{ html()->input('text', 'assigned_to_id')
+    {{ html()->select('assigned_to_id', $users)
         ->class('shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' . ($errors->has('assigned_to_id') ? ' border-red-500' : ''))
-        ->attribute('autofocus') }}
+        ->placeholder(__('Select user')) }}
 </div>

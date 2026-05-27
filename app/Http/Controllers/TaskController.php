@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
+use App\Models\{Task, TaskStatus, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,8 +19,10 @@ class TaskController extends Controller
         Gate::authorize('create', Task::class);
 
         $task = new Task();
+        $statuses = TaskStatus::all();
+        $users = User::all();
 
-        return view('tasks.create', compact('task'));
+        return view('tasks.create', compact('task', 'statuses', 'users'));
     }
 
     public function store(Request $request)
@@ -29,11 +31,12 @@ class TaskController extends Controller
 
         $data = $request->validate([
             'name' => 'required|min:1',
-            'status_id' => 'required|integer|exists:task_statuses,id',
-            'assigned_to_id' => 'integer|exists:users,id'
+            'status_id' => 'required|exists:task_statuses,id'
         ]);
 
-        $task = new Task();
+        $task = new Task([
+            'created_by_id' => auth()->id()
+        ]);
         $task->fill($data)->save();
 
         flash(__('Task successfully created'))->success()->important();

@@ -44,7 +44,7 @@
                         @endcan
 
                         @can('delete', $task)
-                            {{ html()->modelForm($task, 'DELETE', route('task_statuses.destroy', $task))->open() }}
+                            {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))->open() }}
                             {{ html()->submit(__('Delete'))
                                 ->class('text-red-600 hover:text-red-900')
                                 ->attribute('onclick', "return confirm('" . __('Are you sure?') . "')")

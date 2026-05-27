@@ -6,6 +6,7 @@ return [
     'Register' => 'Регистрация',
     'Profile' => 'Профиль',
     'Log Out' => 'Выйти',
+    'Guest' => 'Гость',
     'Create status' => 'Создать статус',
     'Create task' => 'Создать задачу',
     'Edit task' => 'Редактировать задачу',

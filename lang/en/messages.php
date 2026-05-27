@@ -6,6 +6,7 @@ return [
     'Register' => 'Register',
     'Profile' => 'Profile',
     'Log Out' => 'Log Out',
+    'Guest' => 'Guest',
     'Create status' => 'Create status',
     'Create task' => 'Create task',
     'Edit task' => 'Edit task',

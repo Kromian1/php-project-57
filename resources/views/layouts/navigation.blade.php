@@ -112,7 +112,7 @@
         @else
             <div class="pt-2 pb-3 space-y-1">
                 <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">Guest</div>
+                    <div class="font-medium text-base text-gray-800">{{ __('Guest') }}</div>
                     <div class="mt-3 space-y-1">
                         <a href="{{ route('login') }}" class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100">Login</a>
                         <a href="{{ route('register') }}" class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100">Register</a>

@@ -14,16 +14,28 @@ jobs:
           php-version: '8.4'
           coverage: pcov
           tools: composer
+
       - name: install dependencies
         run: make install
+
       - name: create database
         run: touch database/database.sqlite
+
       - name: migrations
         run: make init
+
+      - name: Setup frontend
+        run: |
+          php artisan breeze:install blade
+          npm install
+          npm run build
+
       - name: linter
         run: make lint
+
       - name: tests
         run: make test
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:

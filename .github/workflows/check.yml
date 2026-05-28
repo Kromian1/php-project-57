@@ -16,6 +16,10 @@ jobs:
           tools: composer
       - name: install dependencies
         run: make install
+      - name: create database
+        run: touch database/database.sqlite
+      - name: migrations
+        run: make init
       - name: linter
         run: make lint
       - name: tests

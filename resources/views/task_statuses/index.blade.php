@@ -15,9 +15,9 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-300">
+        <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 dark:border-gray-600">
             <thead>
-            <tr class="bg-gray-100">
+            <tr class="bg-gray-100 dark:bg-gray-700">
                 <th class="px-6 py-3 border-b text-left">ID</th>
                 <th class="px-6 py-3 border-b text-left">{{ __('Name') }}</th>
                 <th class="px-6 py-3 border-b text-left">{{ __('Actions') }}</th>

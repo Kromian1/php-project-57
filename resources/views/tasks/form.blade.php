@@ -31,7 +31,7 @@
         @foreach($labels as $id => $name)
             <div class="flex items-center mb-2">
                 {{ html()->checkbox('labels[]', in_array($id, $taskLabels ?? []), $id)
-                    ->class('mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded') }}
+                    ->class('mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 dark:border-gray-600 rounded') }}
                 {{ html()->label($name, 'labels_' . $id)->class('text-gray-700 text-sm') }}
             </div>
         @endforeach

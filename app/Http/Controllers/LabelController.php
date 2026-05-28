@@ -4,62 +4,79 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $labels = Label::query()->paginate();
+        return view('labels.index', compact('labels'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        Gate::authorize('create', 'label.create');
+        $label = new Label();
+
+        return view('labels.create', compact('label'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', 'label.create');
+
+        $data = $request->validate([
+            'name' => 'required|min:1|unique:labels,name',
+            'description' => 'nullable'
+        ]);
+
+        $label = new Label();
+        $label->fill($data)->save();
+
+        flash(__('Label successfully created'))->success()->important();
+        return redirect()->route('labels.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Label $label)
+    public function edit(int $id)
     {
-        //
+        $label = Label::findOrFail($id);
+
+        Gate::authorize('update', $label);
+
+        return view('labels.edit', compact('label'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Label $label)
+    public function update(Request $request, int $id)
     {
-        //
+        $label = Label::findOrFail($id);
+
+        Gate::authorize('update', $label);
+
+        $data = $request->validate([
+            'name' => 'required|min:1|unique:labels,name, {$label->id}',
+            'description' => 'nullable'
+        ]);
+
+        $label->fill($data)->save();
+
+        flash(__('Label successfully updated'))->success()->important();
+        return redirect()->route('labels.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Label $label)
+    public function destroy(int $id)
     {
-        //
-    }
+        $label = Label::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Label $label)
-    {
-        //
+        Gate::authorize('delete', $label);
+
+        if ($label->tasks()->exists()) {
+            flash(__('Label cannot be deleted'))->error()->important();
+            return redirect()->route('labels.index');
+        }
+
+        $label->delete();
+        flash(__('Label successfully deleted'))->success()->important();
+        return redirect()->route('labels.index');
     }
 }

@@ -18,12 +18,10 @@ return new class extends Migration
             $table->bigInteger('status_id')->unsigned()->index();
             $table->bigInteger('created_by_id')->unsigned()->index();
             $table->bigInteger('assigned_to_id')->unsigned()->nullable()->index();
-            $table->bigInteger('label_id')->unsigned()->index();
 
             $table->foreign('status_id')->references('id')->on('task_statuses');
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('assigned_to_id')->references('id')->on('users');
-            $table->foreign('label_id')->references('id')->on('labels');
 
             $table->timestamps();
         });

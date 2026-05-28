@@ -50,6 +50,8 @@ class TaskStatusController extends Controller
     {
         $status = TaskStatus::findOrFail($id);
 
+        Gate::authorize('update', $status);
+
         $data = $request->validate([
             'name' => "required|min:1|unique:task_statuses,name,{$status->id}"
         ]);

@@ -25,4 +25,19 @@
     {{ html()->select('assigned_to_id', $users)
         ->class('shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' . ($errors->has('assigned_to_id') ? ' border-red-500' : ''))
         ->placeholder(__('Select user')) }}
+    <div class="mb-4">
+        {{ html()->label(__('Labels'), 'labels')->class('block text-gray-700 text-sm font-bold mb-2') }}
+
+        @foreach($labels as $id => $name)
+            <div class="flex items-center mb-2">
+                {{ html()->checkbox('labels[]', in_array($id, $taskLabels ?? []), $id)
+                    ->class('mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded') }}
+                {{ html()->label($name, 'labels_' . $id)->class('text-gray-700 text-sm') }}
+            </div>
+        @endforeach
+
+        @error('labels')
+        <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+        @enderror
+    </div>
 </div>

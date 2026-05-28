@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Task, TaskStatus, User};
+use App\Models\{Task, TaskStatus, Label, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,8 +21,9 @@ class TaskController extends Controller
         $task = new Task();
         $statuses = TaskStatus::pluck('name', 'id');
         $users = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
 
-        return view('tasks.create', compact('task', 'statuses', 'users'));
+        return view('tasks.create', compact('task', 'statuses', 'labels', 'users'));
     }
 
     public function store(Request $request)
@@ -32,13 +33,16 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|min:1',
             'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id'
+            'assigned_to_id' => 'nullable|exists:users,id',
+            'labels' => 'nullable|array',
+            'labels.*' => 'exists:labels,id',
         ]);
 
         $task = new Task([
             'created_by_id' => auth()->id()
         ]);
         $task->fill($data)->save();
+        $task->labels()->sync($request->input('labels', []));
 
         flash(__('Task successfully created'))->success()->important();
         return redirect()->route('tasks.index');
@@ -54,12 +58,15 @@ class TaskController extends Controller
     public function edit(int $id)
     {
         $task = Task::findOrFail($id);
-        $statuses = TaskStatus::pluck('name', 'id');
-        $users = User::pluck('name', 'id');
 
         Gate::authorize('update', $task);
 
-        return view('tasks.edit', compact('task', 'statuses', 'users'));
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
+        $taskLabels = $task->labels->pluck('id')->toArray();
+
+        return view('tasks.edit', compact('task', 'statuses', 'labels', 'taskLabels', 'users'));
     }
 
     public function update(Request $request, int $id)
@@ -71,10 +78,13 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|min:1',
             'status_id' => 'required|integer|exists:task_statuses,id',
-            'assigned_to_id' => 'integer|exists:users,id'
+            'assigned_to_id' => 'integer|exists:users,id',
+            'labels' => 'nullable|array',
+            'labels.*' => 'exists:labels,id',
         ]);
 
         $task->fill($data)->save();
+        $task->labels()->sync($request->input('labels', []));
 
         flash(__('Task successfully updated'))->success()->important();
         return redirect()->route('tasks.index');

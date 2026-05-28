@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_label', function (Blueprint $table) {
+        Schema::create('task_labels', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('task_id')->unsigned();
             $table->bigInteger('label_id')->unsigned();

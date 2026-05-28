@@ -18,6 +18,8 @@ jobs:
         run: make install
       - name: linter
         run: make lint
+      - name: tests
+        run: make test
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:

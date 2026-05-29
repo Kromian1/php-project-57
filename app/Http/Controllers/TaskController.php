@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Models\{Task, TaskStatus, Label, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -11,6 +13,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::query()->paginate();
+
         return view('tasks.index', compact('tasks'));
     }
 

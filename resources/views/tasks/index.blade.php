@@ -14,6 +14,16 @@
         @endcan
     </div>
 
+    <div>
+        <form action="{{ route('tasks.index') }}">
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="status_id" placeholder="status_id">
+            <input type="text" name="created_by_id" placeholder="created_by_id">
+            <input type="text" name="assigned_to_id" placeholder="assigned_to_id">
+            <input type="submit">
+        </form>
+    </div>
+
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 dark:border-gray-600">
             <thead>

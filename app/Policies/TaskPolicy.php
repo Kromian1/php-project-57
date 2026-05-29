@@ -24,7 +24,6 @@ class TaskPolicy
         return Auth::check()
             ? Response::allow()
             : Response::deny(__('You do not have permission to create task'));
-
     }
 
     public function update(User $user, Task $task): Response
@@ -32,7 +31,6 @@ class TaskPolicy
         return Auth::check()
             ? Response::allow()
             : Response::deny(__('You do not have permission to update task'));
-
     }
 
     public function delete(User $user, Task $task): Response

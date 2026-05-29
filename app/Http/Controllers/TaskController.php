@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Filters\TaskFilter;
 use App\Models\{Task, TaskStatus, Label, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(TaskFilter $request)
     {
         $tasks = Task::query()->paginate();
+        $filteredTasks = Task::filter($request)->paginate();
 
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks', 'filteredTasks'));
     }
 
     public function create()

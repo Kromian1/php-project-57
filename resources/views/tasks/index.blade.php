@@ -15,12 +15,26 @@
     </div>
 
     <div>
-        <form action="{{ route('tasks.index') }}">
-            <input type="text" name="name" placeholder="name">
-            <input type="text" name="status_id" placeholder="status_id">
-            <input type="text" name="created_by_id" placeholder="created_by_id">
-            <input type="text" name="assigned_to_id" placeholder="assigned_to_id">
-            <input type="submit">
+        <form action="{{ route('tasks.index') }}" method="get">
+            <select name="status_id">
+                <option value="">{{ __('All statuses') }}</option>
+                @foreach($tasks as $task)
+                    <option value="{{ $task->id }}" @if(isset($_GET['status_id'])) @if($_GET['status_id'] == $task->id) selected @endif @endif>{{ $task->status->name }}</option>
+                @endforeach
+            </select>
+            <select name="created_by_id">
+                <option value="">{{ __('All creators') }}</option>
+                @foreach($tasks as $task)
+                    <option value="{{ $task->created_by_id }}" @if(isset($_GET['created_by_id'])) @if($_GET['created_by_id'] == $task->created_by_id) selected @endif @endif> {{ $task->creator->name }}</option>
+                @endforeach
+            </select>
+            <select name="assigned_to_id">
+                <option value="">{{ __('All assigners') }}</option>
+                @foreach($tasks as $task)
+                    <option value="{{ $task->assigned_to_id }}" @if(isset($_GET['assigned_to_id'])) @if($_GET['assigned_to_id'] == $task->assigned_to_id) selected @endif @endif> {{ $task->assignee->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">{{__('Accept')}}</button>
         </form>
     </div>
 
@@ -38,23 +52,23 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($tasks as $task)
+            @foreach($filteredTasks as $filteredTask)
                 <tr class="border-b">
-                    <td class="px-6 py-4">{{ $task->id }}</td>
-                    <td class="px-6 py-4"><a href="{{ route('tasks.show', $task) }}" class="underline hover:text-yellow-900">{{ $task->name }}</a></td>
-                    <td class="px-6 py-4">{{ $task->status->name ?? '' }}</td>
-                    <td class="px-6 py-4">{{ $task->creator->name }}</td>
-                    <td class="px-6 py-4">{{ $task->assignee->name ?? '' }}</td>
-                    <td class="px-6 py-4">{{ $task->created_at->format('d.m.Y H:i') }}</td>
+                    <td class="px-6 py-4">{{ $filteredTask->id }}</td>
+                    <td class="px-6 py-4"><a href="{{ route('tasks.show', $filteredTask) }}" class="underline hover:text-yellow-900">{{ $filteredTask->name }}</a></td>
+                    <td class="px-6 py-4">{{ $filteredTask->status->name ?? '' }}</td>
+                    <td class="px-6 py-4">{{ $filteredTask->creator->name }}</td>
+                    <td class="px-6 py-4">{{ $filteredTask->assignee->name ?? '' }}</td>
+                    <td class="px-6 py-4">{{ $filteredTask->created_at->format('d.m.Y H:i') }}</td>
                     <td class="px-6 py-4 space-x-2">
-                        @can('update', $task)
-                            <a href="{{ route('tasks.edit', $task) }}" class="text-yellow-600 hover:text-yellow-900">
+                        @can('update', $filteredTask)
+                            <a href="{{ route('tasks.edit', $filteredTask) }}" class="text-yellow-600 hover:text-yellow-900">
                                 {{ __('Edit') }}
                             </a>
                         @endcan
 
-                        @can('delete', $task)
-                            {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))->open() }}
+                        @can('delete', $filteredTask)
+                            {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $filteredTask))->open() }}
                             {{ html()->submit(__('Delete'))
                                 ->class('text-red-600 hover:text-red-900')
                                 ->attribute('onclick', "return confirm('" . __('Are you sure?') . "')")
@@ -69,6 +83,6 @@
     </div>
 
     <div class="mt-4">
-        {{ $tasks->links() }}
+        {{ $filteredTasks->links() }}
     </div>
 @endsection

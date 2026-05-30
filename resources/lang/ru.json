@@ -57,6 +57,8 @@
     "You do not have permission to create label":"У вас недостаточно прав для создания метки",
     "You do not have permission to delete label":"У вас недостаточно прав для удаления метки",
     "You do not have permission to update label":"У вас недостаточно прав для изменения метки",
+    "Hello from Hexlet!":"Привет от Хекслета!",
+    "This is simple task manager on Laravel":"Это простой менеджер задач на Laravel",
     "Showing":"Показано с",
     "to":"по",
     "of":"из",

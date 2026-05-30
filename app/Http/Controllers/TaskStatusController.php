@@ -11,6 +11,7 @@ class TaskStatusController extends Controller
     public function index()
     {
         $taskStatuses = TaskStatus::query()->paginate();
+
         return view('task_statuses.index', compact('taskStatuses'));
     }
 
@@ -27,13 +28,14 @@ class TaskStatusController extends Controller
         Gate::authorize('create', TaskStatus::class);
 
         $data = $request->validate([
-            'name' => 'required|min:1|unique:task_statuses'
+            'name' => 'required|min:1|unique:task_statuses',
         ]);
 
         $status = new TaskStatus();
         $status->fill($data)->save();
 
         flash(__('Status successfully added'))->success()->important();
+
         return redirect()->route('task_statuses.index');
     }
 
@@ -53,12 +55,13 @@ class TaskStatusController extends Controller
         Gate::authorize('update', $status);
 
         $data = $request->validate([
-            'name' => "required|min:1|unique:task_statuses,name,{$status->id}"
+            'name' => "required|min:1|unique:task_statuses,name,{$status->id}",
         ]);
 
         $status->fill($data)->save();
 
         flash(__('Status successfully updated'))->success()->important();
+
         return redirect()->route('task_statuses.index');
     }
 
@@ -69,12 +72,14 @@ class TaskStatusController extends Controller
 
         if ($status->tasks()->exists()) {
             flash(__('Status cannot be deleted'))->error()->important();
+
             return redirect()->route('task_statuses.index');
         }
 
         $status->delete();
 
         flash(__('Status successfully deleted'))->success()->important();
+
         return redirect()->route('task_statuses.index');
     }
 }

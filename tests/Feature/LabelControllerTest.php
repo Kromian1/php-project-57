@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Label;
+use App\Models\Task;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Models\{Task, Label, TaskStatus, User};
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LabelControllerTest extends TestCase
@@ -16,7 +17,8 @@ class LabelControllerTest extends TestCase
     protected const int PAGINATION_PER_PAGE = 15;
 
     protected User $user;
-    public function setUp(): void
+
+    protected function setUp(): void
     {
         parent::setUp();
         $this->user = User::factory()->create();
@@ -51,14 +53,14 @@ class LabelControllerTest extends TestCase
     public function test_store_label_success(): void
     {
         $response = $this->actingAs($this->user)->post(route('labels.store'), [
-            'name' => 'Test label'
+            'name' => 'Test label',
         ]);
 
         $response->assertValid();
         $response->assertRedirect(route('labels.index'));
 
         $this->assertDatabaseHas('labels', [
-            'name' => 'Test label'
+            'name' => 'Test label',
         ]);
     }
 
@@ -68,7 +70,7 @@ class LabelControllerTest extends TestCase
         $this->createLabel('Duplicate Name');
 
         $response = $this->actingAs($this->user)->post(route('labels.store'), [
-            'name' => $invalidName
+            'name' => $invalidName,
         ]);
 
         $response->assertInvalid(['name']);
@@ -91,7 +93,7 @@ class LabelControllerTest extends TestCase
     public function test_edit_label_non_existed(): void
     {
         $response = $this->actingAs($this->user)->get(route('labels.edit', [
-            'label' => 000000
+            'label' => 000000,
         ]));
         $response->assertStatus(404);
     }
@@ -101,18 +103,18 @@ class LabelControllerTest extends TestCase
         $label = $this->createLabel();
 
         $response = $this->actingAsGuest()->patch(route('labels.update', $label), [
-            'name' => 'New Test label'
+            'name' => 'New Test label',
         ]);
         $response->assertStatus(403);
 
         $response = $this->actingAs($this->user)->patch(route('labels.update', $label), [
-            'name' => 'New Test label'
+            'name' => 'New Test label',
         ]);
         $response->assertValid();
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseHas('labels', [
             'id' => $label->id,
-            'name' => 'New Test label'
+            'name' => 'New Test label',
         ]);
     }
 
@@ -122,7 +124,7 @@ class LabelControllerTest extends TestCase
         $label = $this->createLabel('Duplicate Name');
 
         $response = $this->actingAs($this->user)->put(route('labels.update', $label), [
-            'name' => $invalidName
+            'name' => $invalidName,
         ]);
         $response->assertInvalid(['name']);
         $response->assertSessionHasErrors();
@@ -136,21 +138,21 @@ class LabelControllerTest extends TestCase
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('labels', [
-            'id' => $label->id
+            'id' => $label->id,
         ]);
 
         $response = $this->actingAs($this->user)->delete(route('labels.destroy', $label));
 
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseMissing('labels', [
-            'id' => $label
+            'id' => $label,
         ]);
     }
 
     public function test_delete_label_non_existed(): void
     {
         $response = $this->actingAs($this->user)->delete(route('labels.destroy', [
-            'label' => 0000
+            'label' => 0000,
         ]));
 
         $response->assertStatus(404);
@@ -160,7 +162,7 @@ class LabelControllerTest extends TestCase
     {
         $task = Task::factory()->create();
         $task->labels()->create([
-            'name' => 'Test label'
+            'name' => 'Test label',
         ]);
 
         $label = $task->labels()->first();
@@ -169,7 +171,7 @@ class LabelControllerTest extends TestCase
 
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseHas('labels', [
-            'id' => $label->id
+            'id' => $label->id,
         ]);
     }
 
@@ -177,7 +179,7 @@ class LabelControllerTest extends TestCase
     {
         return [
             'empty' => [''],
-            'duplicate' => ['Duplicate Name']
+            'duplicate' => ['Duplicate Name'],
         ];
     }
 

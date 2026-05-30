@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Models\{TaskStatus, Task, User};
+use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Gate;
 
 class TaskStatusControllerTest extends TestCase
 {
@@ -22,6 +23,7 @@ class TaskStatusControllerTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
     }
+
     public function test_index_response_code_and_pagination_15_per_page(): void
     {
         $this->createTaskStatuses(20);
@@ -52,13 +54,13 @@ class TaskStatusControllerTest extends TestCase
     public function test_store_status_success(): void
     {
         $response = $this->actingAs($this->user)->post(route('task_statuses.store'), [
-            'name' => 'New Task Status'
+            'name' => 'New Task Status',
         ]);
         $response->assertValid();
         $response->assertRedirect(route('task_statuses.index'));
 
         $this->assertDatabaseHas('task_statuses', [
-            'name' => 'New Task Status'
+            'name' => 'New Task Status',
         ]);
     }
 
@@ -79,13 +81,13 @@ class TaskStatusControllerTest extends TestCase
         $taskStatus = $this->createTaskStatus();
 
         $response = $this->actingAsGuest()->get(route('task_statuses.edit', [
-            'task_status' => $taskStatus
+            'task_status' => $taskStatus,
         ]));
 
         $response->assertStatus(403);
 
         $response = $this->actingAs($this->user)->get(route('task_statuses.edit', [
-            'task_status' => $taskStatus
+            'task_status' => $taskStatus,
         ]));
         $response->assertStatus(200);
         $response->assertViewIs('task_statuses.edit');
@@ -95,7 +97,7 @@ class TaskStatusControllerTest extends TestCase
     public function test_edit_status_non_existed(): void
     {
         $response = $this->actingAs($this->user)->get(route('task_statuses.edit', [
-            'task_status' => 000
+            'task_status' => 000,
         ]));
 
         $response->assertStatus(404);
@@ -106,9 +108,9 @@ class TaskStatusControllerTest extends TestCase
         $taskStatus = $this->createTaskStatus();
 
         $response = $this->actingAs($this->user)->patch(route('task_statuses.update', [
-            'task_status' => $taskStatus
+            'task_status' => $taskStatus,
         ]), [
-            'name' => 'New Task Status'
+            'name' => 'New Task Status',
         ]);
 
         $response->assertValid();
@@ -116,7 +118,7 @@ class TaskStatusControllerTest extends TestCase
 
         $this->assertDatabaseHas('task_statuses', [
             'id' => $taskStatus->id,
-            'name' => 'New Task Status'
+            'name' => 'New Task Status',
         ]);
     }
 
@@ -126,7 +128,7 @@ class TaskStatusControllerTest extends TestCase
         $this->createTaskStatus('Duplicate Name');
 
         $response = $this->actingAs($this->user)->post(route('task_statuses.store'), [
-            'name' => $invalidName
+            'name' => $invalidName,
         ]);
         $response->assertInvalid(['name']);
         $response->assertSessionHasErrors();
@@ -137,13 +139,13 @@ class TaskStatusControllerTest extends TestCase
         $taskStatus = $this->createTaskStatus();
 
         $response = $this->actingAsGuest()->delete(route('task_statuses.destroy', [
-            'task_status' => $taskStatus
+            'task_status' => $taskStatus,
         ]));
 
         $response->assertStatus(403);
 
         $response = $this->actingAs($this->user)->delete(route('task_statuses.destroy', [
-            'task_status' => $taskStatus
+            'task_status' => $taskStatus,
         ]));
 
         $response->assertRedirect(route('task_statuses.index'));
@@ -155,7 +157,7 @@ class TaskStatusControllerTest extends TestCase
     public function test_delete_status_non_existed(): void
     {
         $response = $this->actingAs($this->user)->delete(route('task_statuses.destroy', [
-            'task_status' => 0000
+            'task_status' => 0000,
         ]));
 
         $response->assertStatus(404);
@@ -165,11 +167,11 @@ class TaskStatusControllerTest extends TestCase
     {
         $taskStatus = $this->createTaskStatus();
         $task = Task::factory()->create([
-            'status_id' => $taskStatus->id
+            'status_id' => $taskStatus->id,
         ]);
 
         $response = $this->actingAs($this->user)->delete(route('task_statuses.destroy', [
-            'task_status' => $taskStatus
+            'task_status' => $taskStatus,
         ]));
 
         $response->assertRedirect(route('task_statuses.index'));
@@ -182,7 +184,7 @@ class TaskStatusControllerTest extends TestCase
     {
         return [
             'empty' => [''],
-            'duplicate' => ['Duplicate Name']
+            'duplicate' => ['Duplicate Name'],
         ];
     }
 

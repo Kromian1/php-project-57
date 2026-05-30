@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 class QueryFilter
 {
     public $request;
+
     protected $builder;
+
     protected $delimiter = ',';
 
     public function __construct(Request $request)

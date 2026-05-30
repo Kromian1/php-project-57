@@ -11,6 +11,7 @@ class LabelController extends Controller
     public function index()
     {
         $labels = Label::query()->paginate();
+
         return view('labels.index', compact('labels'));
     }
 
@@ -28,13 +29,14 @@ class LabelController extends Controller
 
         $data = $request->validate([
             'name' => 'required|min:1|unique:labels,name',
-            'description' => 'nullable'
+            'description' => 'nullable',
         ]);
 
         $label = new Label();
         $label->fill($data)->save();
 
         flash(__('Label successfully added'))->success()->important();
+
         return redirect()->route('labels.index');
     }
 
@@ -55,12 +57,13 @@ class LabelController extends Controller
 
         $data = $request->validate([
             'name' => 'required|min:1|unique:labels,name, {$label->id}',
-            'description' => 'nullable'
+            'description' => 'nullable',
         ]);
 
         $label->fill($data)->save();
 
         flash(__('Label successfully updated'))->success()->important();
+
         return redirect()->route('labels.index');
     }
 
@@ -72,11 +75,13 @@ class LabelController extends Controller
 
         if ($label->tasks()->exists()) {
             flash(__('Label cannot be deleted'))->error()->important();
+
             return redirect()->route('labels.index');
         }
 
         $label->delete();
         flash(__('Label successfully deleted'))->success()->important();
+
         return redirect()->route('labels.index');
     }
 }

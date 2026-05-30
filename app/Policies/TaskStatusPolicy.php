@@ -4,8 +4,8 @@ namespace App\Policies;
 
 use App\Models\TaskStatus;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class TaskStatusPolicy
 {

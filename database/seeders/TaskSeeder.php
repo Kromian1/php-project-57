@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Task;
-use App\Models\TaskStatus;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
@@ -32,8 +30,9 @@ class TaskSeeder extends Seeder
         '1',
         '2',
         '3',
-        '4'
+        '4',
     ];
+
     public function run(): void
     {
         foreach ($this->taskStatuses as $status) {

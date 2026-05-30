@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use PHPUnit\Logging\OpenTestReporting\Status;
-use App\Models\{Task, TaskStatus, User};
+use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Gate;
 
 class TaskControllerTest extends TestCase
 {
@@ -56,14 +56,14 @@ class TaskControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)->post(route('tasks.store'), [
             'name' => 'Test task',
-            'status_id' => $this->status->id
+            'status_id' => $this->status->id,
         ]);
 
         $response->assertValid();
         $response->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('tasks', [
-            'name' => 'Test task'
+            'name' => 'Test task',
         ]);
     }
 
@@ -96,7 +96,7 @@ class TaskControllerTest extends TestCase
     public function test_edit_task_non_existed(): void
     {
         $response = $this->actingAs($this->user)->get(route('tasks.edit', [
-            'task' => 000
+            'task' => 000,
         ]));
 
         $response->assertStatus(404);
@@ -108,10 +108,10 @@ class TaskControllerTest extends TestCase
         $task = $this->createTask();
 
         $response = $this->actingAs($this->user)->put(route('tasks.update', [
-            'task' => $task
+            'task' => $task,
         ]), [
             'name' => 'New Test task',
-            'status_id' => $status->id
+            'status_id' => $status->id,
         ]);
 
         $response->assertValid();
@@ -120,7 +120,7 @@ class TaskControllerTest extends TestCase
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
             'name' => 'New Test task',
-            'status_id' => $status->id
+            'status_id' => $status->id,
         ]);
     }
 
@@ -143,7 +143,7 @@ class TaskControllerTest extends TestCase
 
         $response->assertRedirect(route('tasks.index'));
         $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
     }
 
@@ -161,7 +161,7 @@ class TaskControllerTest extends TestCase
     public function test_delete_task_non_existed(): void
     {
         $response = $this->actingAs($this->user)->delete(route('tasks.destroy', [
-            'task' => 99900
+            'task' => 99900,
         ]));
 
         $response->assertStatus(404);
@@ -172,7 +172,7 @@ class TaskControllerTest extends TestCase
         $task = $this->createTask();
 
         $response = $this->actingAsGuest()->get(route('tasks.show', [
-            'task' => $task
+            'task' => $task,
         ]));
 
         $response->assertStatus(200);
@@ -185,28 +185,28 @@ class TaskControllerTest extends TestCase
         return [
             'empty name' => [
                 ['name' => ''],
-                ['name']
+                ['name'],
             ],
             'empty status_id' => [
                 ['status_id' => null],
-                ['status_id']
+                ['status_id'],
             ],
             'invalid status_id' => [
                 ['status_id' => 99999],
-                ['status_id']
+                ['status_id'],
             ],
             'invalid format status_id' => [
                 ['status_id' => 'asd'],
-                ['status_id']
+                ['status_id'],
             ],
             'invalid assigned_to_id' => [
                 ['assigned_to_id' => 99999],
-                ['assigned_to_id']
+                ['assigned_to_id'],
             ],
             'invalid format assigned_to_id' => [
                 ['assigned_to_id' => 'asd'],
-                ['assigned_to_id']
-            ]
+                ['assigned_to_id'],
+            ],
         ];
     }
 

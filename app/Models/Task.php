@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -18,25 +18,25 @@ class Task extends Model
         'description',
         'status_id',
         'created_by_id',
-        'assigned_to_id'
+        'assigned_to_id',
     ];
 
-    public function creator(): belongsTo
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
-    public function status(): belongsTo
+    public function status(): BelongsTo
     {
         return $this->belongsTo(TaskStatus::class, 'status_id');
     }
 
-    public function assignee(): belongsTo
+    public function assignee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
     }
 
-    public function labels(): belongsToMany
+    public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'task_labels', 'task_id', 'label_id');
     }

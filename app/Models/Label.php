@@ -12,7 +12,7 @@ class Label extends Model
 
     protected $fillable = ['name', 'description'];
 
-    public function tasks(): belongsToMany
+    public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'task_labels', 'label_id', 'task_id');
     }

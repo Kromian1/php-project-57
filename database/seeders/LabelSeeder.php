@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Label;
+use Illuminate\Database\Seeder;
 
 class LabelSeeder extends Seeder
 {
@@ -20,12 +19,13 @@ class LabelSeeder extends Seeder
         'Архитектура' => 'Проектирование структуры приложения и технических решений',
         'Релиз' => 'Подготовка и проведение выпуска новой версии',
     ];
+
     public function run(): void
     {
         foreach ($this->labels as $name => $description) {
             Label::factory()->create([
                 'name' => $name,
-                'description' => $description
+                'description' => $description,
             ]);
         }
     }

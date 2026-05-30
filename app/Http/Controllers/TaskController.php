@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Filters\TaskFilter;
-use App\Models\{Task, TaskStatus, Label, User};
+use App\Models\Label;
+use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -45,12 +48,13 @@ class TaskController extends Controller
         ]);
 
         $task = new Task([
-            'created_by_id' => auth()->id()
+            'created_by_id' => auth()->id(),
         ]);
         $task->fill($data)->save();
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('Task successfully created'))->success()->important();
+
         return redirect()->route('tasks.index');
     }
 
@@ -93,9 +97,9 @@ class TaskController extends Controller
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('Task successfully updated'))->success()->important();
+
         return redirect()->route('tasks.index');
     }
-
 
     public function destroy(int $id)
     {
@@ -106,6 +110,7 @@ class TaskController extends Controller
         $task->delete();
 
         flash(__('Task successfully deleted'))->success()->important();
+
         return redirect()->route('tasks.index');
     }
 }

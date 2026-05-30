@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => 'admin'
+            'password' => 'admin',
         ]);
         $this->call(TaskStatusSeeder::class);
         $this->call(TaskSeeder::class);

@@ -1,4 +1,5 @@
 {
+    "Task Manager":"Менеджер задач",
     "Statuses":"Статусы",
     "Tasks":"Задачи",
     "Labels":"Метки",
@@ -34,6 +35,8 @@
     "All creators":"Все создатели",
     "All assigners":"Все исполнители",
     "Accept":"Применить",
+    "Select user":"Выберите исполнителя",
+    "Select status":"Выберите статус",
     "Status successfully added":"Статус успешно добавлен",
     "Status successfully updated":"Статус успешно обновлен",
     "Status successfully deleted":"Статус успешно удален",
@@ -53,5 +56,9 @@
     "You do not have permission to update task":"У вас недостаточно прав для изменения задачи",
     "You do not have permission to create label":"У вас недостаточно прав для создания метки",
     "You do not have permission to delete label":"У вас недостаточно прав для удаления метки",
-    "You do not have permission to update label":"У вас недостаточно прав для изменения метки"
+    "You do not have permission to update label":"У вас недостаточно прав для изменения метки",
+    "Showing":"Показано с",
+    "to":"по",
+    "of":"из",
+    "results":"записей"
 }

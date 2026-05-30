@@ -8,18 +8,28 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
-      - name: setup-php
+
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           coverage: pcov
           tools: composer
 
-      - name: install dependencies
+      - name: Install Composer dependencies
         run: make install
 
-      - name: create database
+      - name: Create database
         run: touch database/database.sqlite
+
+      - name: Copy environment
+        run: cp .env.example .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Run migrations and seeders
+        run: php artisan migrate --force && php artisan db:seed --force
 
       - name: Install Breeze frontend
         run: |
@@ -28,15 +38,13 @@ jobs:
           npm install
           npm run build
 
-      - name: migrations
-        run: make init
-
-      - name: fix coding standards
+      - name: Fix coding standards
         run: make lint-r
-      - name: linter
+
+      - name: Run linter
         run: make lint
 
-      - name: tests
+      - name: Run tests
         run: make test
 
       - name: SonarQube Scan

@@ -8,38 +8,51 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
-      - name: setup-php
+
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           coverage: pcov
           tools: composer
 
-      - name: install dependencies
+      - name: Install dependencies
         run: make install
 
-      - name: create database
+      - name: Create database
         run: touch database/database.sqlite
 
-      - name: Install Breeze frontend
+      - name: Install Breeze frontend and prepare JS assets
         run: |
           php artisan breeze:install blade
-          sed -i '/import .\/bootstrap/d' resources/js/app.js
+
+          mkdir -p resources/js
+          cat > resources/js/bootstrap.js << 'EOF'
+          // resources/js/bootstrap.js
+          // Инициализация JavaScript-приложения
+
+          window.axios = require('axios');
+          window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+          export {};
+          EOF
+
           npm install
           npm run build
 
-      - name: migrations
+      - name: Run migrations and seed
         run: make init
 
-      - name: fix coding standards
+      - name: Fix coding standards
         run: make lint-r
-      - name: linter
+
+      - name: Linter
         run: make lint
 
-      - name: tests
+      - name: Tests
         run: make test
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -22,6 +22,15 @@ jobs:
       - name: Create database
         run: touch database/database.sqlite
 
+      - name: Run migrations and seed
+        run: make init
+
+      - name: Clear caches
+        run: |
+            php artisan route:clear
+            php artisan config:clear
+            php artisan cache:clear
+
       - name: Install Breeze frontend and prepare JS assets
         run: |
           php artisan breeze:install blade
@@ -39,15 +48,6 @@ jobs:
 
           npm install
           npm run build
-
-      - name: Run migrations and seed
-        run: make init
-
-      - name: Clear caches
-        run: |
-            php artisan route:clear
-            php artisan config:clear
-            php artisan cache:clear
 
       - name: Fix coding standards
         run: make lint-r

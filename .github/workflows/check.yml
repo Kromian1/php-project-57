@@ -24,7 +24,7 @@ jobs:
       - name: Install Breeze frontend
         run: |
           php artisan breeze:install blade
-          touch resources/js/bootstrap.js
+          sed -i '/import .\/bootstrap/d' resources/js/app.js
           npm install
           npm run build
 

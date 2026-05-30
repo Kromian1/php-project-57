@@ -32,9 +32,9 @@ class TaskControllerTest extends TestCase
         $response = $this->get(route('tasks.index'));
 
         $response->assertStatus(200);
-        $response->assertViewHas('tasks');
+        $response->assertViewHas('filteredTasks');
 
-        $tasks = $response->viewData('tasks');
+        $tasks = $response->viewData('filteredTasks');
 
         $this->assertEquals(self::PAGINATION_PER_PAGE, $tasks->count());
         $this->assertTrue($tasks->hasMorePages());

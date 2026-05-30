@@ -2,8 +2,6 @@
 
 @section('title', __('Labels'))
 
-@section('header', __('Labels'))
-
 @section('content')
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">{{ __('Labels') }}</h1>

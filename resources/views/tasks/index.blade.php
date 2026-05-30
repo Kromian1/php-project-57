@@ -2,8 +2,6 @@
 
 @section('title', __('Tasks'))
 
-@section('header', __('Tasks'))
-
 @section('content')
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">{{ __('Tasks') }}</h1>
@@ -14,20 +12,36 @@
         @endcan
     </div>
 
-    <div>
+    <!-- Filters -->
+    <div class="mb-8">
         {{ html()->form('GET', route('tasks.index'))->open() }}
-        {{ html()->select('status_id', $statuses, request('status_id'))
-            ->placeholder(__('All statuses')) }}
-        {{ html()->select('created_by_id', $creators, request('created_by_id'))
-            ->placeholder(__('All creators')) }}
-        {{ html()->select('assigned_to_id', $assigners, request('assigned_to_id'))
-            ->placeholder(__('All assigners')) }}
-        {{ html()->submit(__('Accept')) }}
+        <div class="flex flex-wrap gap-4 items-end">
+            <div class="flex-1 min-w-[150px]">
+                {{ html()->select('status_id', $statuses, request('status_id'))
+                    ->placeholder(__('All statuses'))
+                    ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
+            </div>
+            <div class="flex-1 min-w-[150px]">
+                {{ html()->select('created_by_id', $creators, request('created_by_id'))
+                    ->placeholder(__('All creators'))
+                    ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
+            </div>
+            <div class="flex-1 min-w-[150px]">
+                {{ html()->select('assigned_to_id', $assigners, request('assigned_to_id'))
+                    ->placeholder(__('All assigners'))
+                    ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
+            </div>
+            <div>
+                {{ html()->submit(__('Accept'))
+                    ->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition') }}
+            </div>
+        </div>
         {{ html()->form()->close() }}
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 dark:border-gray-600">
+    <!-- Tasks Table -->
+    <div class="overflow-x-auto mt-8">
+        <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
             <thead>
             <tr class="bg-gray-100 dark:bg-gray-700">
                 <th class="px-6 py-3 border-b text-left">ID</th>
@@ -70,7 +84,8 @@
         </table>
     </div>
 
-    <div class="mt-4 d-flex justify-content-center">
-        {{ $filteredTasks->links('pagination::bootstrap-3') }}
+    <!-- Pagination -->
+    <div class="mt-6 d-flex justify-content-center">
+        {{ $filteredTasks->withQueryString()->links() }}
     </div>
 @endsection

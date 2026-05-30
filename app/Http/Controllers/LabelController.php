@@ -34,7 +34,7 @@ class LabelController extends Controller
         $label = new Label();
         $label->fill($data)->save();
 
-        flash(__('Label successfully created'))->success()->important();
+        flash(__('Label successfully added'))->success()->important();
         return redirect()->route('labels.index');
     }
 

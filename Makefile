@@ -3,7 +3,7 @@ install:
 dump:
 	composer dump-autoload
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 app routes database --ignore=app/Http/Controllers/Auth,storage,vendor
+	composer exec --verbose phpcs -- --standard=PSR12 app routes database
 lint-r:
 	composer exec --verbose phpcbf -- --standard=PSR12 app routes database
 init:

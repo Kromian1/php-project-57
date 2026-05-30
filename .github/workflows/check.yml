@@ -30,7 +30,8 @@ jobs:
           sed -i "s/import '.\/bootstrap';//" resources/js/app.js
           npm install
           npm run build
-
+      - name: fix coding standards
+        run: make lint-r
       - name: linter
         run: make lint
 

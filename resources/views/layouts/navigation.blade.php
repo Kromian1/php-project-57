@@ -20,6 +20,28 @@
                 </div>
             </div>
 
+            <!-- Language Switcher -->
+            <div class="flex items-center space-x-2">
+                @php
+                    $currentLocale = app()->getLocale();
+                @endphp
+
+                <a href="{{ route('language.switch', 'en') }}"
+                   class="px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out
+                          {{ $currentLocale == 'en'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+                    EN
+                </a>
+                <a href="{{ route('language.switch', 'ru') }}"
+                   class="px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out
+                          {{ $currentLocale == 'ru'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+                    RU
+                </a>
+            </div>
+
             <!-- Logout Button -->
             @auth
                 <div class="flex items-center ml-6">
@@ -78,6 +100,24 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
+                    <!-- Language Switcher in mobile menu -->
+                    <div class="flex items-center space-x-2 px-4 py-2">
+                        <a href="{{ route('language.switch', 'en') }}"
+                           class="px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out
+                                  {{ app()->getLocale() == 'en'
+                                      ? 'bg-blue-600 text-white'
+                                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+                            EN
+                        </a>
+                        <a href="{{ route('language.switch', 'ru') }}"
+                           class="px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out
+                                  {{ app()->getLocale() == 'ru'
+                                      ? 'bg-blue-600 text-white'
+                                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+                            RU
+                        </a>
+                    </div>
+
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-responsive-nav-link :href="route('logout')"
@@ -93,6 +133,24 @@
                 <div class="px-4">
                     <div class="font-medium text-xl text-gray-800">{{ __('Guest') }}</div>
                     <div class="mt-3 space-y-1">
+                        <!-- Language Switcher for guests -->
+                        <div class="flex items-center space-x-2 px-4 py-2">
+                            <a href="{{ route('language.switch', 'en') }}"
+                               class="px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out
+                                      {{ app()->getLocale() == 'en'
+                                          ? 'bg-blue-600 text-white'
+                                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+                                EN
+                            </a>
+                            <a href="{{ route('language.switch', 'ru') }}"
+                               class="px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out
+                                      {{ app()->getLocale() == 'ru'
+                                          ? 'bg-blue-600 text-white'
+                                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+                                RU
+                            </a>
+                        </div>
+
                         <a href="{{ route('login') }}" class="block w-full px-4 py-2 text-left text-xl leading-5 text-gray-700 hover:bg-gray-100 transition rounded-md">
                             {{ __('Login') }}
                         </a>

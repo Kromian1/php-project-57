@@ -4,6 +4,7 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class QueryFilter
 {
@@ -28,8 +29,10 @@ class QueryFilter
         $this->builder = $builder;
 
         foreach ($this->filters() as $name => $value) {
-            if (method_exists($this, $name)) {
-                call_user_func_array([$this, $name], array_filter([$value]));
+            $method = Str::camel($name);
+
+            if (method_exists($this, $method)) {
+                $this->$method($value);
             }
         }
 

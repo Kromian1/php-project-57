@@ -82,11 +82,6 @@
     "filter.select_user": "Select user",
     "filter.select_status": "Select status",
 
-    "pagination.showing": "Showing",
-    "pagination.to": "to",
-    "pagination.of": "of",
-    "pagination.results": "results",
-
     "permission.create_status": "You do not have permission to create status",
     "permission.delete_status": "You do not have permission to delete status",
     "permission.update_status": "You do not have permission to update status",

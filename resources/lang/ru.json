@@ -81,10 +81,10 @@
     "filter.select_user": "Выберите исполнителя",
     "filter.select_status": "Выберите статус",
 
-    "pagination.showing": "Показано с",
-    "pagination.to": "по",
-    "pagination.of": "из",
-    "pagination.results": "записей",
+    "Showing": "Показано с",
+    "to": "по",
+    "of": "из",
+    "results": "записей",
 
     "permission.create_status": "У вас недостаточно прав для создания статуса",
     "permission.delete_status": "У вас недостаточно прав для удаления статуса",

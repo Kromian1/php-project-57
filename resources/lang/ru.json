@@ -64,17 +64,17 @@
     "button.back": "Назад",
     "button.create": "Создать",
 
-    "flash.status.added": "Статус успешно добавлен",
-    "flash.status.updated": "Статус успешно обновлен",
-    "flash.status.deleted": "Статус успешно удален",
+    "flash.status.added": "Статус успешно создан",
+    "flash.status.updated": "Статус успешно изменён",
+    "flash.status.deleted": "Статус успешно удалён",
     "flash.status.cannot_delete": "Не удалось удалить статус",
 
     "flash.task.added": "Задача успешно создана",
-    "flash.task.updated": "Задача успешно обновлена",
+    "flash.task.updated": "Задача успешно изменена",
     "flash.task.deleted": "Задача успешно удалена",
 
-    "flash.label.added": "Метка успешно добавлена",
-    "flash.label.updated": "Метка успешно обновлена",
+    "flash.label.added": "Метка успешно создана",
+    "flash.label.updated": "Метка успешно изменена",
     "flash.label.deleted": "Метка успешно удалена",
     "flash.label.cannot_delete": "Не удалось удалить метку",
 

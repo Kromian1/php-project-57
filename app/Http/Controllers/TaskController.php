@@ -53,7 +53,7 @@ class TaskController extends Controller
         $task->fill($data)->save();
         $task->labels()->sync($request->input('labels', []));
 
-        flash(__('Task successfully created'))->success()->important();
+        flash(__('flash.task.added'))->success()->important();
 
         return redirect()->route('tasks.index');
     }
@@ -96,7 +96,7 @@ class TaskController extends Controller
         $task->fill($data)->save();
         $task->labels()->sync($request->input('labels', []));
 
-        flash(__('Task successfully updated'))->success()->important();
+        flash(__('flash.task.updated'))->success()->important();
 
         return redirect()->route('tasks.index');
     }
@@ -109,7 +109,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        flash(__('Task successfully deleted'))->success()->important();
+        flash(__('flash.task.deleted'))->success()->important();
 
         return redirect()->route('tasks.index');
     }

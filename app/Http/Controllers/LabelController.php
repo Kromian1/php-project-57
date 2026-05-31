@@ -35,7 +35,7 @@ class LabelController extends Controller
         $label = new Label();
         $label->fill($data)->save();
 
-        flash(__('Label successfully added'))->success()->important();
+        flash(__('flash.label.added'))->success()->important();
 
         return redirect()->route('labels.index');
     }
@@ -62,7 +62,7 @@ class LabelController extends Controller
 
         $label->fill($data)->save();
 
-        flash(__('Label successfully updated'))->success()->important();
+        flash(__('flash.label.updated'))->success()->important();
 
         return redirect()->route('labels.index');
     }
@@ -74,13 +74,13 @@ class LabelController extends Controller
         Gate::authorize('delete', $label);
 
         if ($label->tasks()->exists()) {
-            flash(__('Label cannot be deleted'))->error()->important();
+            flash(__('flash.label.cannot_delete'))->error()->important();
 
             return redirect()->route('labels.index');
         }
 
         $label->delete();
-        flash(__('Label successfully deleted'))->success()->important();
+        flash(__('flash.label.deleted'))->success()->important();
 
         return redirect()->route('labels.index');
     }

@@ -52,6 +52,9 @@
     "label.name": "Name",
     "label.description": "Description",
 
+    "main.hello": "Hello from Hexlet",
+    "main.description": "This is simple Task manager on Laravel",
+
     "dashboard.info": "You're logged in!",
 
     "button.update": "Update",

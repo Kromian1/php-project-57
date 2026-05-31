@@ -51,6 +51,9 @@
     "label.name": "Название",
     "label.description": "Описание",
 
+    "main.hello": "Привет от Хекслета!",
+    "main.description": "Это простой менеджер задач на Laravel",
+
     "dashboard.info": "Вы авторизованы!",
 
     "button.update": "Обновить",

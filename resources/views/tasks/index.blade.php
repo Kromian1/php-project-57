@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', __('Tasks'))
+@section('title', __('common.tasks'))
 
 @section('content')
     <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">{{ __('Tasks') }}</h1>
+        <h1 class="text-2xl font-bold">{{ __('common.tasks') }}</h1>
         @can('create', App\Models\Task::class)
             <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                {{ __('Create task') }}
+                {{ __('task.create') }}
             </a>
         @endcan
     </div>
@@ -18,21 +18,21 @@
         <div class="flex flex-wrap gap-4 items-end">
             <div class="flex-1 min-w-[150px]">
                 {{ html()->select('status_id', $statuses, request('status_id'))
-                    ->placeholder(__('All statuses'))
+                    ->placeholder(__('filter.all_statuses'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
             </div>
             <div class="flex-1 min-w-[150px]">
                 {{ html()->select('created_by_id', $creators, request('created_by_id'))
-                    ->placeholder(__('All creators'))
+                    ->placeholder(__('filter.all_creators'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
             </div>
             <div class="flex-1 min-w-[150px]">
                 {{ html()->select('assigned_to_id', $assigners, request('assigned_to_id'))
-                    ->placeholder(__('All assigners'))
+                    ->placeholder(__('filter.all_assigners'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
             </div>
             <div>
-                {{ html()->submit(__('Accept'))
+                {{ html()->submit(__('button.accept'))
                     ->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition') }}
             </div>
         </div>
@@ -45,12 +45,12 @@
             <thead>
             <tr class="bg-gray-100 dark:bg-gray-700">
                 <th class="px-6 py-3 border-b text-left">ID</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Name') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Status') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Creator') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Executor') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Create date') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Actions') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('task.name') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('task.status') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('task.creator') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('task.executor') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('task.create_date') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('common.actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -65,15 +65,15 @@
                     <td class="px-6 py-4 space-x-2">
                         @can('update', $filteredTask)
                             <a href="{{ route('tasks.edit', $filteredTask) }}" class="text-yellow-600 hover:text-yellow-900">
-                                {{ __('Edit') }}
+                                {{ __('button.edit') }}
                             </a>
                         @endcan
 
                         @can('delete', $filteredTask)
                             {{ html()->modelForm($filteredTask, 'DELETE', route('tasks.destroy', $filteredTask))->open() }}
-                            {{ html()->submit(__('Delete'))
+                            {{ html()->submit(__('button.delete'))
                                 ->class('text-red-600 hover:text-red-900')
-                                ->attribute('onclick', "return confirm('" . __('Are you sure?') . "')")
+                                ->attribute('onclick', "return confirm('" . __('common.are_you_sure') . "')")
                             }}
                             {{ html()->closeModelForm() }}
                         @endcan

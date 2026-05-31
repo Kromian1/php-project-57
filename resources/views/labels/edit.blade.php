@@ -11,7 +11,7 @@
     <div class="mt-3">
         {{ html()->submit(__('Update'))->class('btn btn-primary') }}
         <a href="{{ route('labels.index') }}" class="btn btn-secondary">
-            {{ __('Cancel') }}
+            {{ __('button.cancel') }}
         </a>
     </div>
     {{ html()->closeModelForm() }}

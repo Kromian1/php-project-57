@@ -6,16 +6,16 @@
                 <!-- Navigation Links -->
                 <div class="flex items-center space-x-8">
                     <x-nav-link :href="route('tasks.index')" class="!text-3xl font-semibold">
-                        {{ __('Task Manager') }}
+                        {{ __('common.task_manager') }}
                     </x-nav-link>
                     <x-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.index')" class="text-xl">
-                        {{ __('Statuses') }}
+                        {{ __('common.statuses') }}
                     </x-nav-link>
                     <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')" class="text-xl">
-                        {{ __('Tasks') }}
+                        {{ __('common.tasks') }}
                     </x-nav-link>
                     <x-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.index')" class="text-xl">
-                        {{ __('Labels') }}
+                        {{ __('common.labels') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 hover:bg-gray-50 focus:outline-none transition ease-in-out duration-150">
-                            {{ __('Log Out') }}
+                            {{ __('common.log_out') }}
                         </button>
                     </form>
                 </div>
@@ -56,10 +56,10 @@
                 <div class="flex items-center ml-6">
                     <div class="space-x-4">
                         <a href="{{ route('login') }}" class="text-xl text-gray-600 hover:text-gray-900 transition">
-                            {{ __('Login') }}
+                            {{ __('common.login') }}
                         </a>
                         <a href="{{ route('register') }}" class="text-xl text-gray-600 hover:text-gray-900 transition">
-                            {{ __('Register') }}
+                            {{ __('common.register') }}
                         </a>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
         @auth
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.*')" class="text-xl">
-                    {{ __('Statuses') }}
+                    {{ __('common.statuses') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')" class="text-xl">
-                    {{ __('Tasks') }}
+                    {{ __('common.tasks') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.*')" class="text-xl">
-                    {{ __('Labels') }}
+                    {{ __('common.labels') }}
                 </x-responsive-nav-link>
             </div>
 
@@ -123,7 +123,7 @@
                         <x-responsive-nav-link :href="route('logout')"
                                                onclick="event.preventDefault(); this.closest('form').submit();"
                                                class="text-lg">
-                            {{ __('Log Out') }}
+                            {{ __('common.log_out') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>
@@ -131,7 +131,7 @@
         @else
             <div class="pt-2 pb-3 space-y-1">
                 <div class="px-4">
-                    <div class="font-medium text-xl text-gray-800">{{ __('Guest') }}</div>
+                    <div class="font-medium text-xl text-gray-800">{{ __('common.guest') }}</div>
                     <div class="mt-3 space-y-1">
                         <!-- Language Switcher for guests -->
                         <div class="flex items-center space-x-2 px-4 py-2">
@@ -152,10 +152,10 @@
                         </div>
 
                         <a href="{{ route('login') }}" class="block w-full px-4 py-2 text-left text-xl leading-5 text-gray-700 hover:bg-gray-100 transition rounded-md">
-                            {{ __('Login') }}
+                            {{ __('common.login') }}
                         </a>
                         <a href="{{ route('register') }}" class="block w-full px-4 py-2 text-left text-xl leading-5 text-gray-700 hover:bg-gray-100 transition rounded-md">
-                            {{ __('Register') }}
+                            {{ __('common.register') }}
                         </a>
                     </div>
                 </div>

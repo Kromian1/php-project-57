@@ -13,5 +13,8 @@ return [
         'assigned_to_id' => 'Исполнитель',
         'description' => 'Описание',
         'labels' => 'Метки',
+        'email' => 'Электронная почта',
+        'password' => 'Пароль',
+        'current_password' => 'Текущий пароль',
     ],
 ];

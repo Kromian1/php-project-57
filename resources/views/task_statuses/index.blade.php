@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', __('Statuses'))
+@section('title', __('common.statuses'))
 
 @section('content')
     <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">{{ __('Statuses') }}</h1>
+        <h1 class="text-2xl font-bold">{{ __('common.statuses') }}</h1>
         @can('create', App\Models\TaskStatus::class)
             <a href="{{ route('task_statuses.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                {{ __('Create status') }}
+                {{ __('status.create') }}
             </a>
         @endcan
     </div>
@@ -17,8 +17,8 @@
             <thead>
             <tr class="bg-gray-100 dark:bg-gray-700">
                 <th class="px-6 py-3 border-b text-left">ID</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Name') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Actions') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('status.name') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('common.actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -29,13 +29,13 @@
                     <td class="px-6 py-4 space-x-2">
                         @can('update', $status)
                             <a href="{{ route('task_statuses.edit', $status) }}" class="text-yellow-600 hover:text-yellow-900">
-                                {{ __('Edit') }}
+                                {{ __('status.edit') }}
                             </a>
                         @endcan
 
                         @can('delete', $status)
                             {{ html()->modelForm($status, 'DELETE', route('task_statuses.destroy', $status))->open() }}
-                            {{ html()->submit(__('Delete'))
+                            {{ html()->submit(__('status.delete'))
                                 ->class('text-red-600 hover:text-red-900')
                                 ->attribute('onclick', "return confirm('" . __('Are you sure?') . "')")
                             }}

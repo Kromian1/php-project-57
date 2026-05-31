@@ -10,7 +10,7 @@
 
 <div class="space-y-6">
     <div>
-        {{ html()->label(__('Name'), 'name')->class('block text-gray-700 font-bold mb-2') }}
+        {{ html()->label(__('label.name'), 'name')->class('block text-gray-700 font-bold mb-2') }}
         {{ html()->input('text', 'name')
             ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 ' . ($errors->has('name') ? 'border-red-500' : ''))
             ->attribute('autofocus') }}
@@ -20,7 +20,7 @@
     </div>
 
     <div>
-        {{ html()->label(__('Description'), 'description')->class('block text-gray-700 font-bold mb-2') }}
+        {{ html()->label(__('label.description'), 'description')->class('block text-gray-700 font-bold mb-2') }}
         {{ html()->textarea('description')
             ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 ' . ($errors->has('description') ? 'border-red-500' : ''))
             ->rows(4) }}

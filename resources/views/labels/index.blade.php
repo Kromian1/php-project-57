@@ -17,9 +17,9 @@
             <thead>
             <tr class="bg-gray-100 dark:bg-gray-700">
                 <th class="px-6 py-3 border-b text-left">ID</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Name') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Description') }}</th>
-                <th class="px-6 py-3 border-b text-left">{{ __('Actions') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('label.name') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('label.description') }}</th>
+                <th class="px-6 py-3 border-b text-left">{{ __('common.actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -37,9 +37,9 @@
 
                         @can('delete', $label)
                             {{ html()->modelForm($label, 'DELETE', route('labels.destroy', $label))->open() }}
-                            {{ html()->submit(__('Delete'))
+                            {{ html()->submit(__('label.delete'))
                                 ->class('text-red-600 hover:text-red-900')
-                                ->attribute('onclick', "return confirm('" . __('Are you sure?') . "')")
+                                ->attribute('onclick', "return confirm('" . __('common.are_you_sure') . "')")
                             }}
                             {{ html()->closeModelForm() }}
                         @endcan

@@ -1,3 +1,6 @@
+@foreach($users as $id => $name)
+    <div>{{ $id }} => {{ $name }}</div>
+@endforeach
 @if ($errors->any())
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
         <ul class="list-disc pl-5">
@@ -42,7 +45,7 @@
         {{ html()->label(__('task.executor'), 'assigned_to_id')->class('block text-gray-700 font-bold mb-2') }}
         {{ html()->select('assigned_to_id', $users)
             ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 ' . ($errors->has('assigned_to_id') ? 'border-red-500' : ''))
-            ->placeholder(__('Select user')) }}
+            ->placeholder(__('filter.select_user')) }}
         @error('assigned_to_id')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror

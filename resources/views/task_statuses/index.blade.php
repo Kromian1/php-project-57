@@ -34,7 +34,7 @@
                         @endcan
 
                         @can('delete', $status)
-                                <a href="{{ route('task_statuses.destroy', $status) }}"
+                                <a href="{{ route('task_statuses.destroy', $status) }}?{{ csrf_token() }}"
                                    class="text-red-600 hover:text-red-900"
                                    data-method="delete"
                                    data-confirm="{{ __('common.are_you_sure') }}">

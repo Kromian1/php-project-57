@@ -36,7 +36,7 @@
                         @endcan
 
                         @can('delete', $label)
-                                <a href="{{ route('labels.destroy', $label) }}"
+                                <a href="{{ route('labels.destroy', $label)}}?{{ csrf_token() }} }}"
                                    class="text-red-600 hover:text-red-900"
                                    data-method="delete"
                                    data-confirm="{{ __('common.are_you_sure') }}">

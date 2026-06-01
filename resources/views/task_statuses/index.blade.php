@@ -34,12 +34,12 @@
                         @endcan
 
                         @can('delete', $status)
-                                <a href="{{ route('task_statuses.destroy', $status) }}?{{ csrf_token() }}"
-                                   class="text-red-600 hover:text-red-900"
-                                   data-method="delete"
-                                   data-confirm="{{ __('common.are_you_sure') }}">
-                                    {{ __('button.delete') }}
-                                </a>
+                            {{ html()->modelForm($status, 'DELETE', route('task_statuses.destroy', $status))->open() }}
+                            {{ html()->submit(__('status.delete'))
+                                ->class('text-red-600 hover:text-red-900')
+                                ->attribute('onclick', "return confirm('" . __('common.are_you_sure') . "')")
+                            }}
+                            {{ html()->closeModelForm() }}
                         @endcan
                     </td>
                 </tr>

@@ -41,6 +41,7 @@ class TaskController extends Controller
 
         $data = $request->validate([
             'name' => 'required|min:1',
+            'description' => 'nullable',
             'status_id' => 'required|exists:task_statuses,id',
             'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable|array',
@@ -87,8 +88,9 @@ class TaskController extends Controller
 
         $data = $request->validate([
             'name' => 'required|min:1',
-            'status_id' => 'required|integer|exists:task_statuses,id',
-            'assigned_to_id' => 'integer|exists:users,id',
+            'description' => 'nullable',
+            'status_id' => 'required|exists:task_statuses,id',
+            'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);

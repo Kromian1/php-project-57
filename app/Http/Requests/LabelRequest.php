@@ -31,7 +31,7 @@ class LabelRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => 'Метка с таким названием уже существует'
+            'name.unique' => 'Метка с таким именем уже существует'
         ];
     }
 }

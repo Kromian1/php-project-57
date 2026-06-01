@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => 'admin',
         ]);*/
-        $this->call(TaskStatusSeeder::class);
+        //$this->call(TaskStatusSeeder::class);
         /*$this->call(TaskSeeder::class);
         $this->call(LabelSeeder::class);*/
     }

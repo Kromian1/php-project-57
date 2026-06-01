@@ -48,13 +48,10 @@ class TaskController extends Controller
             'labels.*' => 'exists:labels,id',
         ]);
 
-        $task = Task::create([
-            'name' => $data['name'],
-            'description' => $data['description'] ?? null,
-            'status_id' => $data['status_id'],
-            'assigned_to_id' => $data['assigned_to_id'] ?? null,
+        $task = new Task([
             'created_by_id' => auth()->id(),
         ]);
+        $task->fill($data)->save();
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('flash.task.added'))->success()->important();

@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Label;
-use App\Models\TaskStatus;
-use App\Policies\TaskStatusPolicy;
+use App\Models\{Label, Task, TaskStatus};
+use App\Policies\{LabelPolicy, TaskStatusPolicy, TaskPolicy};
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy(TaskStatus::class, TaskStatusPolicy::class, Label::class);
+        Gate::policy(TaskStatus::class, TaskStatusPolicy::class);
+        Gate::policy(Label::class, LabelPolicy::class);
+        Gate::policy(Task::class, TaskPolicy::class);
     }
 }

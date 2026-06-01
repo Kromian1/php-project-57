@@ -30,7 +30,7 @@ class TaskStatusRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => 'Статус с таким названием уже существует'
+            'name.unique' => 'Статус с таким именем уже существует'
         ];
     }
 }

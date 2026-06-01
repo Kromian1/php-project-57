@@ -36,12 +36,12 @@
                         @endcan
 
                         @can('delete', $label)
-                            {{ html()->modelForm($label, 'DELETE', route('labels.destroy', $label))->open() }}
-                            {{ html()->submit(__('label.delete'))
-                                ->class('text-red-600 hover:text-red-900')
-                                ->attribute('onclick', "return confirm('" . __('common.are_you_sure') . "')")
-                            }}
-                            {{ html()->closeModelForm() }}
+                                <a href="{{ route('labels.destroy', $label) }}"
+                                   class="text-red-600 hover:text-red-900"
+                                   data-method="delete"
+                                   data-confirm="{{ __('common.are_you_sure') }}">
+                                    {{ __('button.delete') }}
+                                </a>
                         @endcan
                     </td>
                 </tr>

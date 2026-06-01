@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskStatusRequest;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,7 +24,7 @@ class TaskStatusController extends Controller
         return view('task_statuses.create', compact('status'));
     }
 
-    public function store(Request $request)
+    public function store(TaskStatusRequest $request)
     {
         Gate::authorize('create', TaskStatus::class);
 
@@ -48,7 +49,7 @@ class TaskStatusController extends Controller
         return view('task_statuses.edit', compact('status'));
     }
 
-    public function update(Request $request, int $id)
+    public function update(TaskStatusRequest $request, int $id)
     {
         $status = TaskStatus::findOrFail($id);
 

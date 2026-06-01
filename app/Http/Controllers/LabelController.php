@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LabelRequest;
 use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,7 +24,7 @@ class LabelController extends Controller
         return view('labels.create', compact('label'));
     }
 
-    public function store(Request $request)
+    public function store(LabelRequest $request)
     {
         Gate::authorize('create', Label::class);
 
@@ -49,7 +50,7 @@ class LabelController extends Controller
         return view('labels.edit', compact('label'));
     }
 
-    public function update(Request $request, int $id)
+    public function update(LabelRequest $request, int $id)
     {
         $label = Label::findOrFail($id);
 

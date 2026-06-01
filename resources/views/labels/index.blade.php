@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', __('Labels'))
+@section('title', __('common.labels'))
 
 @section('content')
     <div class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold">{{ __('Labels') }}</h1>
+        <h1 class="text-2xl font-bold">{{ __('common.labels') }}</h1>
         @can('create', App\Models\Label::class)
             <a href="{{ route('labels.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                {{ __('Create label') }}
+                {{ __('label.create') }}
             </a>
         @endcan
     </div>
@@ -31,7 +31,7 @@
                     <td class="px-6 py-4 space-x-2">
                         @can('update', $label)
                             <a href="{{ route('labels.edit', $label) }}" class="text-yellow-600 hover:text-yellow-900">
-                                {{ __('Edit') }}
+                                {{ __('button.edit') }}
                             </a>
                         @endcan
 

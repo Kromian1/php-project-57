@@ -29,7 +29,7 @@
                     <td class="px-6 py-4 space-x-2">
                         @can('update', $status)
                             <a href="{{ route('task_statuses.edit', $status) }}" class="text-yellow-600 hover:text-yellow-900">
-                                {{ __('status.edit') }}
+                                {{ __('button.edit') }}
                             </a>
                         @endcan
 

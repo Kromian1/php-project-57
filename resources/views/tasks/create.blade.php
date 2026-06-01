@@ -9,7 +9,7 @@
         @include('tasks.form')
 
     <div class="mt-4">
-        {{ html()->submit(__('task.create'))->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded') }}
+        {{ html()->submit(__('button.create'))->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded') }}
     </div>
     {{ html()->closeModelForm() }}
 @endsection

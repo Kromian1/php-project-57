@@ -30,6 +30,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if ($request->date('name') === 'Pair') {
+            throw new \Exception(json_encode([
+                'request' => $request,
+            ], JSON_PRETTY_PRINT));
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
@@ -41,6 +47,12 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if ($user === 'Pair') {
+            throw new \Exception(json_encode([
+                'user' => $user,
+            ]));
+        }
 
         event(new Registered($user));
 

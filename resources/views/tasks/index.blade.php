@@ -38,6 +38,7 @@
         </div>
         {{ html()->form()->close() }}
     </div>
+    <div>{{ $filteredTasks }}</div>
 
     <!-- Tasks Table -->
     <div class="overflow-x-auto mt-8">
@@ -60,6 +61,8 @@
                     <td class="px-6 py-4"><a href="{{ route('tasks.show', $filteredTask) }}" class="underline hover:text-yellow-900">{{ $filteredTask->name }}</a></td>
                     <td class="px-6 py-4">{{ $filteredTask->status->name ?? '' }}</td>
                     <td class="px-6 py-4">{{ $filteredTask->creator->name }}</td>
+                    <td class="px-6 py-4">{{ $filteredTask }}</td>
+                    <td class="px-6 py-4">{{ $filteredTask->creator->assignee }}</td>
                     <td class="px-6 py-4">{{ $filteredTask->assignee->name ?? '' }}</td>
                     <td class="px-6 py-4">{{ $filteredTask->created_at->format('d.m.Y') }}</td>
                     <td class="px-6 py-4 space-x-2">

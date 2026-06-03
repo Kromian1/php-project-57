@@ -106,14 +106,11 @@
                         </a>
                     </div>
 
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                                               onclick="event.preventDefault(); this.closest('form').submit();"
-                                               class="text-lg">
+                    <div class="flex items-center ml-6">
+                        <a href="{{ route('logout') }}" class="text-xl text-gray-600 hover:text-gray-900 transition">
                             {{ __('common.log_out') }}
-                        </x-responsive-nav-link>
-                    </form>
+                        </a>
+                    </div>
                 </div>
             </div>
         @else

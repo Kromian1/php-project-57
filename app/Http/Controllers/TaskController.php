@@ -44,7 +44,7 @@ class TaskController extends Controller
             'name' => 'required|min:1',
             'description' => 'nullable',
             'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
+            'assigned_to_id' => 'nullable',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);

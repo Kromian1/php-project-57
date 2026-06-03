@@ -20,9 +20,6 @@ class TaskController extends Controller
 
         $filteredTasks = Task::filter($request)->paginate();
 
-        dd($filteredTasks);
-
-
         return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners'));
     }
 

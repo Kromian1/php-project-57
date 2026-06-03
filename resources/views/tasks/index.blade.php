@@ -38,7 +38,6 @@
         </div>
         {{ html()->form()->close() }}
     </div>
-    <div>{{ $filteredTasks }}</div>
 
     <!-- Tasks Table -->
     <div class="overflow-x-auto mt-8">

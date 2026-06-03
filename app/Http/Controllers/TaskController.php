@@ -18,8 +18,8 @@ class TaskController extends Controller
         $creators = User::whereIn('id', Task::distinct()->pluck('created_by_id'))->pluck('name', 'id');
         $assigners = User::whereIn('id', Task::distinct()->pluck('assigned_to_id'))->pluck('name', 'id');
 
-        //$filteredTasks = Task::filter($request)->paginate();
-        $filteredTasks = Task::query()->paginate();
+        $filteredTasks = Task::filter($request)->paginate();
+        //$filteredTasks = Task::query()->paginate();
 
         return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners'));
     }
@@ -30,13 +30,13 @@ class TaskController extends Controller
 
         $task = new Task();
         $statuses = TaskStatus::pluck('name', 'id');
-        //$users = User::pluck('name', 'id');
-        $users = User::all();
+        $users = User::pluck('name', 'id');
+        //$users = User::all();
 
-        throw new \Exception(json_encode([
+        /*throw new \Exception(json_encode([
             'users' => $users->toArray(),
             'users_count' => $users->count(),
-        ], JSON_PRETTY_PRINT));
+        ], JSON_PRETTY_PRINT));*/
 
         $labels = Label::pluck('name', 'id');
 
@@ -61,6 +61,7 @@ class TaskController extends Controller
         ]);
 
         $task->fill($data)->save();
+
         if ($task->name === 'Task 4') {
             throw new \Exception(json_encode([
                 'task_id' => $task->id,

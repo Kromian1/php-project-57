@@ -30,11 +30,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        /*
         if ($request->name === 'Pair') {
             throw new \Exception(json_encode([
                 'request' => $request->all,
             ], JSON_PRETTY_PRINT));
-        }
+        }*/
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

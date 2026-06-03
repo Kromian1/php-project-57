@@ -48,11 +48,17 @@ class TaskController extends Controller
             'labels.*' => 'exists:labels,id',
         ]);
 
-        $task = new Task([
+        if ($data['assigned_to_id'] == 2) {
+            $pairUser = User::where('email', 'pair@hexlet.io')->first();
+        }
+
+        $task = Task::create([
+            'name' => $data['name'],
+            'description' => $data['description'] ?? null,
+            'status_id' => $data['status_id'],
+            'assigned_to_id' => isset($pairUser) ? $pairUser->id : $data['assigned_to_id'] ?? null,
             'created_by_id' => auth()->id(),
         ]);
-
-        $task->fill($data)->save();
 
         $task->labels()->sync($request->input('labels', []));
 

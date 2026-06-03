@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if ($request->date('name') === 'Pair') {
+        if ($request->name === 'Pair') {
             throw new \Exception(json_encode([
                 'request' => $request,
             ], JSON_PRETTY_PRINT));

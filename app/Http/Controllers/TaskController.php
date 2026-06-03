@@ -54,6 +54,7 @@ class TaskController extends Controller
 
         $task->fill($data)->save();
 
+
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('flash.task.added'))->success()->important();

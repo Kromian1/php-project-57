@@ -18,7 +18,8 @@ class TaskController extends Controller
         $creators = User::whereIn('id', Task::distinct()->pluck('created_by_id'))->pluck('name', 'id');
         $assigners = User::whereIn('id', Task::distinct()->pluck('assigned_to_id'))->pluck('name', 'id');
 
-        $filteredTasks = Task::filter($request)->paginate();
+        //$filteredTasks = Task::filter($request)->paginate();
+        $filteredTasks = Task::query()->paginate();
 
         return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners'));
     }

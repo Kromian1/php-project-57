@@ -13,7 +13,7 @@ init:
 start-dev:
 	composer dev
 test:
-	php artisan test
+	php artisan test --coverage-clover=coverage.xml
 test-c:
 	php artisan test --coverage
 test-h:

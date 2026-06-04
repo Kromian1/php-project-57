@@ -1,3 +1,17 @@
+@if ($errors->any())
+    <div style="background:red;color:white;padding:10px;">
+        @foreach ($errors->all() as $error)
+            <div>{{ $error }}</div>
+        @endforeach
+    </div>
+@endif
+<div style="background:yellow">
+    auth={{ auth()->check() ? 'yes' : 'no' }}
+
+    @auth
+        user={{ auth()->user()->email }}
+    @endauth
+</div>
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

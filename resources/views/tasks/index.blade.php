@@ -21,6 +21,13 @@
             </div>
         @endforeach
     </div>
+    <div style="background:red;color:white;padding:10px">
+        auth_id={{ auth()->id() ?? 'null' }}
+
+        @foreach(session()->all() as $k => $v)
+            <div>{{ $k }}</div>
+        @endforeach
+    </div>
 
     <!-- Filters -->
     <div class="mb-8">

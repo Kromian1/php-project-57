@@ -1,17 +1,3 @@
-<div style="background:red;color:white">
-    FORM FOUND
-</div>
-
-<div>
-    action={{ route('login') }}
-</div>
-
-<div>
-    button text:
-    {{ __('common.login') }}
-</div>
-<input type="hidden" name="debug_login_page" value="yes">
-
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

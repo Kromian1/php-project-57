@@ -11,29 +11,6 @@
             </a>
         @endcan
     </div>
-<!-- debug -->
-    <div>
-        @foreach(App\Models\User::all() as $user)
-            <div style="background: yellow; color: black; padding: 10px;">
-                id={{ $user->id }}
-                user={{ $user->name }}
-                email={{ $user->email }}
-            </div>
-        @endforeach
-    </div>
-    <div style="background: lime">
-        debug_login_hit={{ session('debug_login_hit') }}
-    </div>
-    <div style="background: cyan">
-        auth_check={{ auth()->check() ? 'yes' : 'no' }}
-    </div>
-    <div style="background:red;color:white;padding:10px">
-        auth_id={{ auth()->id() ?? 'null' }}
-
-        @foreach(session()->all() as $k => $v)
-            <div>{{ $k }}</div>
-        @endforeach
-    </div>
 
     <!-- Filters -->
     <div class="mb-8">

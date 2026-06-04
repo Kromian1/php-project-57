@@ -14,7 +14,7 @@ start-dev:
 	composer dev
 test:
 	php artisan test --coverage-clover=coverage.xml
-	sed -i 's+'$(pwd)'+\.+g' coverage.xml
+	sed -i 's|'$$PWD'|.|g' coverage.xml
 test-c:
 	php artisan test --coverage
 test-h:

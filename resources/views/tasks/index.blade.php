@@ -12,17 +12,12 @@
         @endcan
     </div>
 <!-- debug -->
-    <div style="background: yellow; color: black; padding: 10px;">
-        auth_id={{ auth()->id() ?? 'null' }}
-        user={{ auth()->user()?->email ?? 'guest' }}
-        can_create={{ auth()->user()?->can('create', App\Models\Task::class) ? 'yes' : 'no' }}
-    </div>
     <div>
         @foreach(App\Models\User::all() as $user)
             <div style="background: yellow; color: black; padding: 10px;">
-                auth_id={{ auth()->id() ?? 'null' }}
-                user={{ auth()->user()?->email ?? 'guest' }}
-                can_create={{ auth()->user()?->can('create', App\Models\Task::class) ? 'yes' : 'no' }}
+                id={{ $user->id }}
+                user={{ $user->name }}
+                email={{ $user->email }}
             </div>
         @endforeach
     </div>

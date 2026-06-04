@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'admin',
-        ]);*/
-        //$this->call(TaskStatusSeeder::class);
-        /*$this->call(TaskSeeder::class);
+        ]);
+        $this->call(TaskStatusSeeder::class);
+        $this->call(TaskSeeder::class);
         $this->call(LabelSeeder::class);*/
     }
 }

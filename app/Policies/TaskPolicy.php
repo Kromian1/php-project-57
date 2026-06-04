@@ -9,24 +9,24 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskPolicy
 {
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
         return true;
     }
 
-    public function view(User $user, Task $task): bool
+    public function view(): bool
     {
         return true;
     }
 
-    public function create(User $user): Response
+    public function create(): Response
     {
         return Auth::check()
             ? Response::allow()
             : Response::deny(__('You do not have permission to create task'));
     }
 
-    public function update(User $user, Task $task): Response
+    public function update(): Response
     {
         return Auth::check()
             ? Response::allow()

@@ -67,7 +67,7 @@ class TaskStatusControllerTest extends TestCase
     }
 
     #[DataProvider('InvalidNameProvider')]
-    public function test_store_status_validation_fails(string $invalidName): void
+    public function test_status_validation_fails(string $invalidName): void
     {
         $this->createTaskStatus($this::DUPLICATE_NAME);
 
@@ -122,18 +122,6 @@ class TaskStatusControllerTest extends TestCase
             'id' => $taskStatus->id,
             'name' => $this::NEW_TEST_NAME,
         ]);
-    }
-
-    #[DataProvider('InvalidNameProvider')]
-    public function test_update_status_validation_falls(string $invalidName): void
-    {
-        $this->createTaskStatus($this::DUPLICATE_NAME);
-
-        $response = $this->actingAs($this->user)->post(route('task_statuses.store'), [
-            'name' => $invalidName,
-        ]);
-        $response->assertInvalid(['name']);
-        $response->assertSessionHasErrors();
     }
 
     public function test_delete_status_success(): void

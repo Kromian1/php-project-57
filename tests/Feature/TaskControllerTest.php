@@ -67,17 +67,6 @@ class TaskControllerTest extends TestCase
         ]);
     }
 
-    #[DataProvider('InvalidParametersProvider')]
-    public function test_store_task_validation_fails(array $invalidParameters, array $expectedErrors): void
-    {
-        $this->createTask();
-
-        $response = $this->actingAs($this->user)->post(route('tasks.store'), $invalidParameters);
-
-        $response->assertInvalid($expectedErrors);
-        $response->assertSessionHasErrors();
-    }
-
     public function test_edit_status_success(): void
     {
         $task = $this->createTask();

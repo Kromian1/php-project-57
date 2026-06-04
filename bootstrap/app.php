@@ -16,6 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
             LocaleMiddleware::class
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (): void {
         //
     })->create();

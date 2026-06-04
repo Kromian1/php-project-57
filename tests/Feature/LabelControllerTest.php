@@ -15,6 +15,9 @@ class LabelControllerTest extends TestCase
     use RefreshDatabase;
 
     protected const int PAGINATION_PER_PAGE = 15;
+    protected const string TEST_NAME_LABEL = 'Test Label';
+    protected const string NEW_TEST_NAME_LABEL = 'New Test Label';
+    protected const string TEST_DUPLICATE_NAME = 'Duplicate Name';
 
     protected User $user;
 
@@ -53,21 +56,21 @@ class LabelControllerTest extends TestCase
     public function test_store_label_success(): void
     {
         $response = $this->actingAs($this->user)->post(route('labels.store'), [
-            'name' => 'Test label',
+            'name' => $this::TEST_NAME_LABEL,
         ]);
 
         $response->assertValid();
         $response->assertRedirect(route('labels.index'));
 
         $this->assertDatabaseHas('labels', [
-            'name' => 'Test label',
+            'name' => $this::TEST_NAME_LABEL,
         ]);
     }
 
     #[DataProvider('InvalidNameProvider')]
     public function test_store_label_validation_fails(string $invalidName): void
     {
-        $this->createLabel('Duplicate Name');
+        $this->createLabel($this::TEST_DUPLICATE_NAME);
 
         $response = $this->actingAs($this->user)->post(route('labels.store'), [
             'name' => $invalidName,
@@ -103,25 +106,25 @@ class LabelControllerTest extends TestCase
         $label = $this->createLabel();
 
         $response = $this->actingAsGuest()->patch(route('labels.update', $label), [
-            'name' => 'New Test label',
+            'name' => $this::NEW_TEST_NAME_LABEL,
         ]);
         $response->assertStatus(403);
 
         $response = $this->actingAs($this->user)->patch(route('labels.update', $label), [
-            'name' => 'New Test label',
+            'name' => $this::NEW_TEST_NAME_LABEL,
         ]);
         $response->assertValid();
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseHas('labels', [
             'id' => $label->id,
-            'name' => 'New Test label',
+            'name' => $this::NEW_TEST_NAME_LABEL,
         ]);
     }
 
     #[DataProvider('InvalidNameProvider')]
     public function test_update_label_validation_fails(string $invalidName): void
     {
-        $label = $this->createLabel('Duplicate Name');
+        $label = $this->createLabel($this::TEST_DUPLICATE_NAME);
 
         $response = $this->actingAs($this->user)->put(route('labels.update', $label), [
             'name' => $invalidName,
@@ -162,7 +165,7 @@ class LabelControllerTest extends TestCase
     {
         $task = Task::factory()->create();
         $task->labels()->create([
-            'name' => 'Test label',
+            'name' => $this::TEST_NAME_LABEL,
         ]);
 
         $label = $task->labels()->first();

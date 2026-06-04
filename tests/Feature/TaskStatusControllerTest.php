@@ -15,6 +15,8 @@ class TaskStatusControllerTest extends TestCase
     use RefreshDatabase;
 
     protected const int PAGINATION_PER_PAGE = 15;
+    protected const string NEW_TEST_NAME = 'New Task Status';
+    protected const string DUPLICATE_NAME = 'Duplicate Name';
 
     protected User $user;
 
@@ -54,20 +56,20 @@ class TaskStatusControllerTest extends TestCase
     public function test_store_status_success(): void
     {
         $response = $this->actingAs($this->user)->post(route('task_statuses.store'), [
-            'name' => 'New Task Status',
+            'name' => $this::NEW_TEST_NAME,
         ]);
         $response->assertValid();
         $response->assertRedirect(route('task_statuses.index'));
 
         $this->assertDatabaseHas('task_statuses', [
-            'name' => 'New Task Status',
+            'name' => $this::NEW_TEST_NAME,
         ]);
     }
 
     #[DataProvider('InvalidNameProvider')]
     public function test_store_status_validation_fails(string $invalidName): void
     {
-        $this->createTaskStatus('Duplicate Name');
+        $this->createTaskStatus($this::DUPLICATE_NAME);
 
         $response = $this->actingAs($this->user)->post(route('task_statuses.store'), [
             'name' => $invalidName,
@@ -110,7 +112,7 @@ class TaskStatusControllerTest extends TestCase
         $response = $this->actingAs($this->user)->patch(route('task_statuses.update', [
             'task_status' => $taskStatus,
         ]), [
-            'name' => 'New Task Status',
+            'name' => $this::NEW_TEST_NAME,
         ]);
 
         $response->assertValid();
@@ -118,14 +120,14 @@ class TaskStatusControllerTest extends TestCase
 
         $this->assertDatabaseHas('task_statuses', [
             'id' => $taskStatus->id,
-            'name' => 'New Task Status',
+            'name' => $this::NEW_TEST_NAME,
         ]);
     }
 
     #[DataProvider('InvalidNameProvider')]
     public function test_update_status_validation_falls(string $invalidName): void
     {
-        $this->createTaskStatus('Duplicate Name');
+        $this->createTaskStatus($this::DUPLICATE_NAME);
 
         $response = $this->actingAs($this->user)->post(route('task_statuses.store'), [
             'name' => $invalidName,

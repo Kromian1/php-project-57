@@ -30,13 +30,6 @@ class TaskController extends Controller
         $task = new Task();
         $statuses = TaskStatus::pluck('name', 'id');
         $users = User::pluck('name', 'id');
-        //$users = User::all();
-
-        /*throw new \Exception(json_encode([
-            'users' => $users->toArray(),
-            'users_count' => $users->count(),
-        ], JSON_PRETTY_PRINT));*/
-
         $labels = Label::pluck('name', 'id');
 
         return view('tasks.create', compact('task', 'statuses', 'labels', 'users'));
@@ -50,7 +43,7 @@ class TaskController extends Controller
             'name' => 'required|min:1',
             'description' => 'nullable',
             'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable',
+            'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);

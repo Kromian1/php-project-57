@@ -75,7 +75,7 @@
                                 {{ html()->closeModelForm() }}
 
                                 <a href="{{ route('tasks.destroy', $filteredTask) }}"
-                                   onclick="event.preventDefault(); document.getElementById('delete-form-{{ $filteredTask->id }}').submit();"
+                                   onclick="if(confirm('{{ __('common.are_you_sure') }}')) { event.preventDefault(); document.getElementById('delete-form-{{ $filteredTask->id }}').submit(); } else { event.preventDefault(); }"
                                    class="text-red-600 hover:text-red-900">
                                     {{ __('button.delete') }}
                                 </a>

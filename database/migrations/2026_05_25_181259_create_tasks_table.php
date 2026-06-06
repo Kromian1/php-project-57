@@ -15,14 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->bigInteger('status_id')->unsigned()->index();
-            $table->bigInteger('created_by_id')->unsigned()->index();
-            $table->bigInteger('assigned_to_id')->unsigned()->nullable()->index();
-
-            $table->foreign('status_id')->references('id')->on('task_statuses');
-            $table->foreign('created_by_id')->references('id')->on('users');
-            $table->foreign('assigned_to_id')->references('id')->on('users');
-
+            $table->foreignId('status_id')->constrained('task_statuses')->index();
+            $table->foreignId('created_by_id')->constrained('users')->index();
+            $table->foreignId('assigned_to_id')->nullable()->constrained('users')->index();
             $table->timestamps();
         });
     }

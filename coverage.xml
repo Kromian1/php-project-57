@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1780602889">
-  <project timestamp="1780602889" name="Clover Coverage">
+<coverage generated="1780737727">
+  <project timestamp="1780737727" name="Clover Coverage">
     <package name="App\Filters">
       <file name="/home/user/projects/task-manager/app/Filters/QueryFilter.php">
         <class name="App\Filters\QueryFilter" namespace="App\Filters">
@@ -294,16 +294,16 @@
         <line num="32" type="stmt" count="1"/>
         <line num="33" type="stmt" count="1"/>
         <line num="35" type="stmt" count="1"/>
-        <line num="38" type="method" name="store" visibility="public" complexity="1" crap="1" count="13"/>
-        <line num="40" type="stmt" count="13"/>
-        <line num="42" type="stmt" count="13"/>
-        <line num="43" type="stmt" count="13"/>
-        <line num="44" type="stmt" count="13"/>
-        <line num="45" type="stmt" count="13"/>
-        <line num="46" type="stmt" count="13"/>
-        <line num="47" type="stmt" count="13"/>
-        <line num="48" type="stmt" count="13"/>
-        <line num="49" type="stmt" count="13"/>
+        <line num="38" type="method" name="store" visibility="public" complexity="1" crap="1" count="7"/>
+        <line num="40" type="stmt" count="7"/>
+        <line num="42" type="stmt" count="7"/>
+        <line num="43" type="stmt" count="7"/>
+        <line num="44" type="stmt" count="7"/>
+        <line num="45" type="stmt" count="7"/>
+        <line num="46" type="stmt" count="7"/>
+        <line num="47" type="stmt" count="7"/>
+        <line num="48" type="stmt" count="7"/>
+        <line num="49" type="stmt" count="7"/>
         <line num="51" type="stmt" count="1"/>
         <line num="52" type="stmt" count="1"/>
         <line num="53" type="stmt" count="1"/>
@@ -391,11 +391,11 @@
         <class name="App\Http\Middleware\LocaleMiddleware" namespace="App\Http\Middleware">
           <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="5" coveredelements="5"/>
         </class>
-        <line num="16" type="method" name="handle" visibility="public" complexity="1" crap="1" count="72"/>
-        <line num="18" type="stmt" count="72"/>
-        <line num="19" type="stmt" count="72"/>
-        <line num="20" type="stmt" count="72"/>
-        <line num="22" type="stmt" count="72"/>
+        <line num="16" type="method" name="handle" visibility="public" complexity="1" crap="1" count="64"/>
+        <line num="18" type="stmt" count="64"/>
+        <line num="19" type="stmt" count="64"/>
+        <line num="20" type="stmt" count="64"/>
+        <line num="22" type="stmt" count="64"/>
         <metrics loc="25" ncloc="20" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="5" coveredelements="5"/>
       </file>
     </package>
@@ -476,16 +476,16 @@
         <class name="App\Http\Requests\TaskStatusRequest" namespace="App\Http\Requests">
           <metrics complexity="3" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="10" coveredelements="10"/>
         </class>
-        <line num="13" type="method" name="authorize" visibility="public" complexity="1" crap="1" count="6"/>
-        <line num="15" type="stmt" count="6"/>
-        <line num="23" type="method" name="rules" visibility="public" complexity="1" crap="1" count="6"/>
-        <line num="25" type="stmt" count="6"/>
-        <line num="26" type="stmt" count="6"/>
-        <line num="27" type="stmt" count="6"/>
-        <line num="30" type="method" name="messages" visibility="public" complexity="1" crap="1" count="6"/>
-        <line num="32" type="stmt" count="6"/>
-        <line num="33" type="stmt" count="6"/>
-        <line num="34" type="stmt" count="6"/>
+        <line num="13" type="method" name="authorize" visibility="public" complexity="1" crap="1" count="4"/>
+        <line num="15" type="stmt" count="4"/>
+        <line num="23" type="method" name="rules" visibility="public" complexity="1" crap="1" count="4"/>
+        <line num="25" type="stmt" count="4"/>
+        <line num="26" type="stmt" count="4"/>
+        <line num="27" type="stmt" count="4"/>
+        <line num="30" type="method" name="messages" visibility="public" complexity="1" crap="1" count="4"/>
+        <line num="32" type="stmt" count="4"/>
+        <line num="33" type="stmt" count="4"/>
+        <line num="34" type="stmt" count="4"/>
         <metrics loc="37" ncloc="29" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="10" coveredelements="10"/>
       </file>
     </package>
@@ -526,11 +526,11 @@
         <class name="App\Models\User" namespace="App\Models">
           <metrics complexity="3" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="4" elements="9" coveredelements="5"/>
         </class>
-        <line num="27" type="method" name="casts" visibility="protected" complexity="1" crap="1" count="68"/>
-        <line num="29" type="stmt" count="68"/>
-        <line num="30" type="stmt" count="68"/>
-        <line num="31" type="stmt" count="68"/>
-        <line num="32" type="stmt" count="68"/>
+        <line num="27" type="method" name="casts" visibility="protected" complexity="1" crap="1" count="60"/>
+        <line num="29" type="stmt" count="60"/>
+        <line num="30" type="stmt" count="60"/>
+        <line num="31" type="stmt" count="60"/>
+        <line num="32" type="stmt" count="60"/>
         <line num="35" type="method" name="createdTasks" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="37" type="stmt" count="0"/>
         <line num="40" type="method" name="assignedTasks" visibility="public" complexity="1" crap="2" count="0"/>
@@ -569,10 +569,10 @@
         <line num="14" type="stmt" count="0"/>
         <line num="17" type="method" name="view" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="19" type="stmt" count="0"/>
-        <line num="22" type="method" name="create" visibility="public" complexity="2" crap="2" count="14"/>
-        <line num="24" type="stmt" count="14"/>
-        <line num="25" type="stmt" count="14"/>
-        <line num="26" type="stmt" count="14"/>
+        <line num="22" type="method" name="create" visibility="public" complexity="2" crap="2" count="8"/>
+        <line num="24" type="stmt" count="8"/>
+        <line num="25" type="stmt" count="8"/>
+        <line num="26" type="stmt" count="8"/>
         <line num="29" type="method" name="update" visibility="public" complexity="2" crap="2" count="2"/>
         <line num="31" type="stmt" count="2"/>
         <line num="32" type="stmt" count="2"/>
@@ -611,13 +611,13 @@
         <class name="App\Providers\AppServiceProvider" namespace="App\Providers">
           <metrics complexity="3" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="5" elements="8" coveredelements="6"/>
         </class>
-        <line num="16" type="method" name="register" visibility="public" complexity="1" crap="1" count="72"/>
-        <line num="19" type="stmt" count="72"/>
-        <line num="24" type="method" name="boot" visibility="public" complexity="2" crap="2.03" count="72"/>
-        <line num="26" type="stmt" count="72"/>
-        <line num="27" type="stmt" count="72"/>
-        <line num="28" type="stmt" count="72"/>
-        <line num="30" type="stmt" count="72"/>
+        <line num="16" type="method" name="register" visibility="public" complexity="1" crap="1" count="64"/>
+        <line num="19" type="stmt" count="64"/>
+        <line num="24" type="method" name="boot" visibility="public" complexity="2" crap="2.03" count="64"/>
+        <line num="26" type="stmt" count="64"/>
+        <line num="27" type="stmt" count="64"/>
+        <line num="28" type="stmt" count="64"/>
+        <line num="30" type="stmt" count="64"/>
         <line num="31" type="stmt" count="0"/>
         <metrics loc="35" ncloc="28" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="5" elements="8" coveredelements="6"/>
       </file>

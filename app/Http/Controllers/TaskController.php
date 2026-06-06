@@ -8,10 +8,13 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
     public function index(TaskFilter $request)
     {
         $statuses = TaskStatus::pluck('name', 'id');
@@ -25,8 +28,6 @@ class TaskController extends Controller
 
     public function create()
     {
-        Gate::authorize('create', Task::class);
-
         $task = new Task();
         $statuses = TaskStatus::pluck('name', 'id');
         $users = User::pluck('name', 'id');
@@ -37,9 +38,7 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        Gate::authorize('create', Task::class);
-
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|min:1',
             'description' => 'nullable',
             'status_id' => 'required|exists:task_statuses,id',
@@ -52,7 +51,7 @@ class TaskController extends Controller
             'created_by_id' => auth()->id(),
         ]);
 
-        $task->fill($data)->save();
+        $task->fill($validated)->save();
 
         $task->labels()->sync($request->input('labels', []));
 
@@ -61,34 +60,32 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function show(int $id)
+    public function show(Task $task)
     {
-        $task = Task::findOrFail($id);
-
-        return view('tasks.show', compact('task'));
+        return view('tasks.show', [
+            'task' => $task
+            ]);
     }
 
-    public function edit(int $id)
+    public function edit(Task $task)
     {
-        $task = Task::findOrFail($id);
-
-        Gate::authorize('update', $task);
-
         $statuses = TaskStatus::pluck('name', 'id');
         $users = User::pluck('name', 'id');
         $labels = Label::pluck('name', 'id');
         $taskLabels = $task->labels->pluck('id')->toArray();
 
-        return view('tasks.edit', compact('task', 'statuses', 'labels', 'taskLabels', 'users'));
+        return view('tasks.edit', [
+            'task' => $task,
+            'statuses' => $statuses,
+            'users' => $users,
+            'labels' => $labels,
+            'taskLabels' => $taskLabels
+        ]);
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, Task $task)
     {
-        $task = Task::findOrFail($id);
-
-        Gate::authorize('update', $task);
-
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|min:1',
             'description' => 'nullable',
             'status_id' => 'required|exists:task_statuses,id',
@@ -97,7 +94,7 @@ class TaskController extends Controller
             'labels.*' => 'exists:labels,id',
         ]);
 
-        $task->fill($data)->save();
+        $task->fill($validated)->save();
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('flash.task.updated'))->success()->important();
@@ -105,12 +102,8 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(Task $task)
     {
-        $task = Task::findOrFail($id);
-
-        Gate::authorize('delete', $task);
-
         $task->delete();
 
         flash(__('flash.task.deleted'))->success()->important();

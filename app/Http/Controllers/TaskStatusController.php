@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskStatusRequest;
 use App\Models\TaskStatus;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class TaskStatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class, 'task_status');
+    }
+
     public function index()
     {
         $taskStatuses = TaskStatus::query()->paginate();
@@ -18,7 +21,6 @@ class TaskStatusController extends Controller
 
     public function create()
     {
-        Gate::authorize('create', TaskStatus::class);
         $status = new TaskStatus();
 
         return view('task_statuses.create', compact('status'));
@@ -26,54 +28,44 @@ class TaskStatusController extends Controller
 
     public function store(TaskStatusRequest $request)
     {
-        Gate::authorize('create', TaskStatus::class);
+        $taskStatus = new TaskStatus();
 
-        $data = $request->validated();
+        $validated = $request->validated();
 
-        $status = new TaskStatus();
-        $status->fill($data)->save();
+        $taskStatus->fill($validated)->save();
 
         flash(__('flash.status.added'))->success()->important();
 
         return redirect()->route('task_statuses.index');
     }
 
-    public function edit(int $id)
+    public function edit(TaskStatus $taskStatus)
     {
-        $status = TaskStatus::findOrFail($id);
-
-        Gate::authorize('update', $status);
-
-        return view('task_statuses.edit', compact('status'));
+        return view('task_statuses.edit', [
+            'status' => $taskStatus
+        ]);
     }
 
-    public function update(TaskStatusRequest $request, int $id)
+    public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
-        $status = TaskStatus::findOrFail($id);
+        $validated = $request->validated();
 
-        Gate::authorize('update', $status);
-
-        $data = $request->validated();
-
-        $status->fill($data)->save();
+        $taskStatus->fill($validated)->save();
 
         flash(__('flash.status.updated'))->success()->important();
 
         return redirect()->route('task_statuses.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(TaskStatus $taskStatus)
     {
-        $status = TaskStatus::findOrFail($id);
-        Gate::authorize('delete', $status);
-
-        if ($status->tasks()->exists()) {
+        if ($taskStatus->tasks()->exists()) {
             flash(__('flash.status.cannot_delete'))->error()->important();
 
             return redirect()->route('task_statuses.index');
         }
 
-        $status->delete();
+        $taskStatus->delete();
 
         flash(__('flash.status.deleted'))->success()->important();
 

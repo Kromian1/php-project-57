@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class, 'label');
+    }
+
     public function index()
     {
         $labels = Label::query()->paginate();
@@ -19,55 +24,40 @@ class LabelController extends Controller
     public function create()
     {
         $label = new Label();
-        Gate::authorize('create', $label);
 
         return view('labels.create', compact('label'));
     }
 
     public function store(LabelRequest $request)
     {
-        Gate::authorize('create', Label::class);
-
-        $data = $request->validated();
+        $validated = $request->validated();
 
         $label = new Label();
-        $label->fill($data)->save();
+        $label->fill($validated)->save();
 
         flash(__('flash.label.added'))->success()->important();
 
         return redirect()->route('labels.index');
     }
 
-    public function edit(int $id)
+    public function edit(Label $label)
     {
-        $label = Label::findOrFail($id);
-
-        Gate::authorize('update', $label);
-
-        return view('labels.edit', compact('label'));
+        return view('labels.edit', ['label' => $label]);
     }
 
-    public function update(LabelRequest $request, int $id)
+    public function update(LabelRequest $request, Label $label)
     {
-        $label = Label::findOrFail($id);
+        $validated = $request->validated();
 
-        Gate::authorize('update', $label);
-
-        $data = $request->validated();
-
-        $label->fill($data)->save();
+        $label->fill($validated)->save();
 
         flash(__('flash.label.updated'))->success()->important();
 
         return redirect()->route('labels.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(Label $label)
     {
-        $label = Label::findOrFail($id);
-
-        Gate::authorize('delete', $label);
-
         if ($label->tasks()->exists()) {
             flash(__('flash.label.cannot_delete'))->error()->important();
 

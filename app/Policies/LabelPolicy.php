@@ -6,12 +6,12 @@ use App\Models\User;
 
 class LabelPolicy
 {
-    public function viewAny(): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
 
-    public function view(): bool
+    public function view(?User $user): bool
     {
         return true;
     }

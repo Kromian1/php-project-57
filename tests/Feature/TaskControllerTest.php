@@ -114,7 +114,7 @@ class TaskControllerTest extends TestCase
     }
 
     #[DataProvider('InvalidParametersProvider')]
-    public function test_update_task_validation_fails(array $invalidParameters, array $expectedErrors): void
+    public function test_create_task_validation_fails(array $invalidParameters, array $expectedErrors): void
     {
         $this->createTask();
 

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\TaskFilter;
 use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
@@ -16,13 +17,25 @@ class TaskController extends Controller
     {
         $this->authorizeResource(Task::class, 'task');
     }
-    public function index(TaskFilter $request)
+    public function index(Request $request)
     {
         $statuses = TaskStatus::pluck('name', 'id');
-        $creators = User::whereIn('id', Task::distinct()->pluck('created_by_id'))->pluck('name', 'id');
-        $assigners = User::whereIn('id', Task::distinct()->pluck('assigned_to_id'))->pluck('name', 'id');
+        $creators = User::query()
+            ->whereIn('id', Task::query()->select('created_by_id'))
+            ->pluck('name', 'id');
 
-        $filteredTasks = Task::filter($request)->paginate();
+        $assigners = User::query()
+            ->whereIn('id', Task::query()->select('assigned_to_id'))
+            ->pluck('name', 'id');
+
+        $filteredTasks = QueryBuilder::for(Task::class)
+            ->allowedFilters(
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            )
+            ->with(['status', 'creator', 'assignee'])
+            ->paginate();
 
         return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners'));
     }

@@ -36,22 +36,20 @@ class TaskController extends Controller
         return view('tasks.create', compact('task', 'statuses', 'labels', 'users'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Task $task)
     {
         $validated = $request->validate([
             'name' => 'required|min:1|max:100',
             'description' => 'nullable',
+            'created_by_id' => 'required|exists:users,id',
             'status_id' => 'required|exists:task_statuses,id',
             'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);
 
-        $task = new Task([
-            'created_by_id' => auth()->id(),
-        ]);
+        $task = Auth::user()->createdTasks()->create($validated);
 
-        $task->fill($validated)->save();
 
         $task->labels()->sync($request->input('labels', []));
 

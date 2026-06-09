@@ -7,6 +7,8 @@ use App\Models\TaskStatus;
 
 class TaskStatusController extends Controller
 {
+    protected const int PAGINATION_COUNT = 15;
+
     public function __construct()
     {
         $this->authorizeResource(TaskStatus::class, 'task_status');
@@ -14,7 +16,7 @@ class TaskStatusController extends Controller
 
     public function index()
     {
-        $taskStatuses = TaskStatus::query()->paginate();
+        $taskStatuses = TaskStatus::query()->paginate($this::PAGINATION_COUNT);
 
         return view('task_statuses.index', compact('taskStatuses'));
     }

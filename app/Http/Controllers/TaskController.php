@@ -14,10 +14,13 @@ use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
+    protected const int PAGINATION_COUNT = 15;
+
     public function __construct()
     {
         $this->authorizeResource(Task::class, 'task');
     }
+
     public function index(Request $request)
     {
         $statuses = TaskStatus::pluck('name', 'id');
@@ -36,7 +39,7 @@ class TaskController extends Controller
                 AllowedFilter::exact('assigned_to_id'),
             )
             ->with(['status', 'createdBy', 'assignee'])
-            ->paginate();
+            ->paginate($this::PAGINATION_COUNT);
 
         return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners'));
     }

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
 {
+    protected const int PAGINATION_COUNT = 15;
+
     public function __construct()
     {
         $this->authorizeResource(Label::class, 'label');
@@ -16,7 +18,7 @@ class LabelController extends Controller
 
     public function index()
     {
-        $labels = Label::query()->paginate();
+        $labels = Label::query()->paginate($this::PAGINATION_COUNT);
 
         return view('labels.index', compact('labels'));
     }

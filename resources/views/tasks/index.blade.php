@@ -17,17 +17,17 @@
         {{ html()->form('GET', route('tasks.index'))->open() }}
         <div class="flex flex-wrap gap-4 items-end">
             <div class="flex-1 min-w-[150px]">
-                {{ html()->select('filter[status_id]', $statuses, request('filter.status_id'))
+                {{ html()->select('filter[status_id]', $statuses, $filters['status_id'])
                     ->placeholder(__('filter.all_statuses'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
             </div>
             <div class="flex-1 min-w-[150px]">
-                {{ html()->select('filter[created_by_id]', $creators, request('filter.created_by_id'))
+                {{ html()->select('filter[created_by_id]', $creators, $filters['created_by_id'])
                     ->placeholder(__('filter.all_creators'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
             </div>
             <div class="flex-1 min-w-[150px]">
-                {{ html()->select('filter[assigned_to_id]', $assigners, request('filter.assigned_to_id'))
+                {{ html()->select('filter[assigned_to_id]', $assigners, $filters['assigned_to_id'])
                     ->placeholder(__('filter.all_assigners'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
             </div>

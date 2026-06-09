@@ -23,15 +23,6 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $statuses = TaskStatus::pluck('name', 'id');
-        $creators = User::query()
-            ->whereIn('id', Task::query()->select('created_by_id'))
-            ->pluck('name', 'id');
-
-        $assigners = User::query()
-            ->whereIn('id', Task::query()->select('assigned_to_id'))
-            ->pluck('name', 'id');
-
         $filteredTasks = QueryBuilder::for(Task::class)
             ->allowedFilters(
                 AllowedFilter::exact('status_id'),
@@ -41,7 +32,17 @@ class TaskController extends Controller
             ->with(['status', 'createdBy', 'assignee'])
             ->paginate($this::PAGINATION_COUNT);
 
-        return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners'));
+        $statuses = TaskStatus::pluck('name', 'id');
+        $creators = User::pluck('name', 'id');
+        $assigners = User::pluck('name', 'id');
+
+        $filters = [
+            'status_id' => $request->input('filter.status_id'),
+            'created_by_id' => $request->input('filter.created_by_id'),
+            'assigned_to_id' => $request->input('filter.assigned_to_id'),
+        ];
+
+        return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners', 'filters'));
     }
 
     public function create()

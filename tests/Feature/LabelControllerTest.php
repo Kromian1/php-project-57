@@ -27,7 +27,7 @@ class LabelControllerTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_index_response_code_and_pagination_15_per_page(): void
+    public function test_index_response_code_and_pagination(): void
     {
         $this->createLabels(20);
 

@@ -25,7 +25,7 @@ class TaskControllerTest extends TestCase
         $this->status = TaskStatus::factory()->create();
     }
 
-    public function test_index_response_code_and_pagination_15_per_page(): void
+    public function test_index_response_code_and_pagination(): void
     {
         $this->createTasks(20);
 

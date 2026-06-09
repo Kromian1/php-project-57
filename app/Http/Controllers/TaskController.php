@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
@@ -50,16 +51,9 @@ class TaskController extends Controller
         return view('tasks.create', compact('task', 'statuses', 'labels', 'users'));
     }
 
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:1|max:255',
-            'description' => 'nullable',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-            'labels' => 'nullable|array',
-            'labels.*' => 'exists:labels,id',
-        ]);
+        $validated = $request->validated();
 
         $task = Auth::user()->createdTasks()->create($validated);
 
@@ -93,16 +87,9 @@ class TaskController extends Controller
         ]);
     }
 
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:1|max:255',
-            'description' => 'nullable',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-            'labels' => 'nullable|array',
-            'labels.*' => 'exists:labels,id',
-        ]);
+        $validated = $request->validated();
 
         $task->fill($validated)->save();
         $task->labels()->sync($request->input('labels', []));

@@ -23,7 +23,7 @@ class LabelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:1|max:100|unique:labels,name',
+            'name' => 'required|min:1|max:255|unique:labels,name',
             'description' => 'nullable'
         ];
     }

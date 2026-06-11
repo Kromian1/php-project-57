@@ -11,8 +11,9 @@
 
     <div>
         {{ html()->label(__('task.description'), 'description')->class('block text-gray-700 font-bold mb-2') }}
-        {{ html()->input('text', 'description')
-            ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 ' . ($errors->has('description') ? 'border-red-500' : '')) }}
+        {{ html()->textarea('description')
+            ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200')
+            ->rows(3) }}
         @error('description')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror

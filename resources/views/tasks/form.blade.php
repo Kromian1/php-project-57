@@ -23,7 +23,7 @@
         {{ html()->select('status_id', $statuses)
             ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 ' . ($errors->has('status_id') ? 'border-red-500' : ''))
             ->placeholder(__('filter.select_status'))
-             ->value(old('status_id')) }}
+             ->value(old('status_id', $task->status_id ?? null)) }}
         @error('status_id')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
@@ -34,7 +34,7 @@
         {{ html()->select('assigned_to_id', $users)
             ->class('w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 ' . ($errors->has('assigned_to_id') ? 'border-red-500' : ''))
             ->placeholder(__('filter.select_user'))
-             ->value(old('assigned_to_id')) }}
+             ->value(old('assigned_to_id', $task->assigned_to_id ?? null)) }}
         @error('assigned_to_id')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
@@ -45,14 +45,17 @@
 
         <div class="space-y-2 bg-gray-50 p-4 rounded-lg border border-gray-200">
             @foreach($labels as $id => $name)
-                @php
-                    $isChecked = old('labels')
-                        ? in_array($id, old('labels'))
-                        : (in_array($id, $taskLabels ?? []));
-                @endphp
                 <div class="flex items-center">
-                    {{ html()->checkbox('labels[]', $isChecked, $id)
-                        ->class('h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded') }}
+                    {{ html()->checkbox(
+                            'labels[]',
+                            old('labels') !== null
+                                ? in_array((string) $id, old('labels'))
+                                : in_array($id, $taskLabels ?? []),
+                            $id
+                        )
+                        ->class('h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded')
+                    }}
+
                     {{ html()->label($name, 'labels_' . $id)->class('ml-3 text-gray-700') }}
                 </div>
             @endforeach

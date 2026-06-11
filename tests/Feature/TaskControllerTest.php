@@ -17,6 +17,7 @@ class TaskControllerTest extends TestCase
     protected const int PAGINATION_PER_PAGE = 15;
 
     protected User $user;
+    protected TaskStatus $status;
 
     protected function setUp(): void
     {

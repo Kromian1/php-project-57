@@ -25,6 +25,7 @@ class TaskController extends Controller
     {
         $filteredTasks = QueryBuilder::for(Task::class)
             ->allowedFilters(
+                AllowedFilter::exact('id'),
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id'),
@@ -35,6 +36,7 @@ class TaskController extends Controller
         $statuses = TaskStatus::pluck('name', 'id');
         $creators = User::pluck('name', 'id');
         $assigners = User::pluck('name', 'id');
+        $taskNames = Task::pluck('name', 'id');
 
         $filters = [
             'status_id' => $request->input('filter.status_id'),
@@ -43,7 +45,14 @@ class TaskController extends Controller
             'id' => $request->input('filter.id')
         ];
 
-        return view('tasks.index', compact('filteredTasks', 'statuses', 'creators', 'assigners', 'filters'));
+        return view('tasks.index', compact(
+            'filteredTasks',
+            'statuses',
+            'creators',
+            'assigners',
+            'taskNames',
+            'filters'
+        ));
     }
 
     public function create()

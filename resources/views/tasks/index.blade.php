@@ -17,11 +17,6 @@
         {{ html()->form('GET', route('tasks.index'))->open() }}
         <div class="flex flex-wrap gap-4 items-end">
             <div class="flex-1 min-w-[150px]">
-                {{ html()->select('filter[id]', $taskNames, $filters['id'])
-                    ->placeholder(__('filter.all_names'))
-                    ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
-            </div>
-            <div class="flex-1 min-w-[150px]">
                 {{ html()->select('filter[status_id]', $statuses, $filters['status_id'])
                     ->placeholder(__('filter.all_statuses'))
                     ->class('w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none') }}
